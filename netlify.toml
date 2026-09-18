@@ -1,14 +1,13 @@
 [build]
-  # Le indica a Netlify en qué carpeta trabajar
+  # Entra a la carpeta frontend
   base = "frontend"
   
-  # Le indica a Netlify dónde están los archivos estáticos que debe publicar
-  publish = "frontend"
+  # Publica el contenido de esa misma carpeta base
+  publish = "."
   
-  # Sin comando de compilación porque es HTML/CSS/JS vanila
+  # Sin comando de compilación
   command = ""
 
-# Redirección para asegurar que la navegación SPA (Single Page Application) funcione siempre
 [[redirects]]
   from = "/*"
   to = "/index.html"
