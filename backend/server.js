@@ -8,6 +8,9 @@ const pool = new Pool({
   }
 });
 
+const cors = require('cors');
+app.use(cors());
+
 // Prueba directa de consulta a la base de datos al arrancar
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
