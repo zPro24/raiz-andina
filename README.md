@@ -87,7 +87,7 @@ Base URL (Producción): `https://backend-web-sz3a.onrender.com`
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/tu-usuario/raiz-andina.git
+git clone https://github.com/zPro24/raiz-andina.git
 cd raiz-andina
 ```
 
