@@ -1,8 +1,26 @@
-document.getElementById('form-login').addEventListener('submit', (e) => {
+document.getElementById('form-login').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const correo = document.getElementById('correo').value;
-  
-  // Simulación de respuesta de backend
-  alert(`Bienvenido/a, ${correo}. Inicio de sesión exitoso.`);
-  window.location.hash = '#inicio';
+  const email = document.getElementById('correo').value;
+  const password = document.getElementById('password').value;
+
+  try {
+    const res = await fetch('https://tu-backend.onrender.com/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      localStorage.setItem('token', data.token);
+      alert('¡Bienvenido ' + data.usuario.nombre + '!');
+      window.location.hash = '#inicio';
+    } else {
+      alert(data.error);
+    }
+  } catch (err) {
+    console.error(err);
+    alert('Error al conectar con el servidor.');
+  }
 });
