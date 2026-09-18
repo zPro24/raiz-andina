@@ -4,7 +4,7 @@ document.getElementById('form-login').addEventListener('submit', async (e) => {
   const password = document.getElementById('password').value;
 
   try {
-    const res = await fetch('https://tu-backend.onrender.com/api/auth/login', {
+    const res = await fetch('https://backend-web-sz3a.onrender.com', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
