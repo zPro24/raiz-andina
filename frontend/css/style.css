@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;600&family=Work+Sans:wght@400;600&display=swap');
+
+/* Variables de color de Raíz Andina */
+:root {
+  --verde-andino: #1F3D33;
+  --musgo: #2F5D50;
+  --oro-cordillera: #C9962F;
+  --oro-suave: #E7CE95;
+  --papel: #F4F1E6;
+  --niebla: #DAD3BC;
+  --tinta: #262520;
+
+  --font-serif: 'Fraunces', serif;
+  --font-sans: 'Work Sans', sans-serif;
+}
+
+/* Modo Oscuro (Alternativo) */
+[data-theme="dark"] {
+  --papel: #1A2621;
+  --tinta: #F4F1E6;
+  --niebla: #2F5D50;
+  --verde-andino: #12241E;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--papel);
+  color: var(--tinta);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+/* Encabezado fijo (Sticky Header) */
+.navbar {
+  position: sticky;
+  top: 0;
+  height: 76px;
+  background-color: var(--verde-andino);
+  color: var(--papel);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  z-index: 1000;
+}
+
+.navbar .logo {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--oro-suave);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--papel);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 15px;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--oro-cordillera);
+}
+
+.btn-primary {
+  background-color: var(--oro-cordillera);
+  color: var(--tinta);
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: var(--oro-suave);
+}
+
+/* Manejo de Vistas (Secciones) */
+.view {
+  display: none;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.view.active {
+  display: block;
+}
+
+/* Estilos de Títulos */
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  color: var(--verde-andino);
+}
+
+[data-theme="dark"] h1, 
+[data-theme="dark"] h2, 
+[data-theme="dark"] h3 {
+  color: var(--oro-suave);
+}
+
+h1 { font-size: 2.8rem; line-height: 1.12; margin-bottom: 1rem; }
+h2 { font-size: 2.2rem; line-height: 1.15; margin-bottom: 1.5rem; }
+h3 { font-size: 1.3rem; line-height: 1.2; }
+
+/* Cuadrícula de Productos */
+.grid-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.card-producto {
+  background: var(--niebla);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--niebla);
+}
+
+.card-producto.destacado {
+  grid-column: span 2;
+  background-color: var(--verde-andino);
+  color: var(--papel);
+}
+
+.card-producto.destacado h3 {
+  color: var(--oro-suave);
+}
+
+/* Formularios (Contacto y Login) */
+.form-container {
+  max-width: 450px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--niebla);
+  border-radius: 8px;
+}
+
+.form-group {
+  margin-bottom: 1.2rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid var(--musgo);
+  border-radius: 4px;
+  background: var(--papel);
+  color: var(--tinta);
+}
+
+/* Pie de Página */
+footer {
+  background-color: var(--verde-andino);
+  color: var(--papel);
+  text-align: center;
+  padding: 2rem;
+  margin-top: 4rem;
+}
