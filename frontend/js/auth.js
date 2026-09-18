@@ -4,7 +4,8 @@ document.getElementById('form-login').addEventListener('submit', async (e) => {
   const password = document.getElementById('password').value;
 
   try {
-    const res = await fetch('https://backend-web-sz3a.onrender.com', {
+    // ¡Añadida la ruta /api/auth/login!
+    const res = await fetch('https://backend-web-sz3a.onrender.com/api/auth/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -17,7 +18,7 @@ document.getElementById('form-login').addEventListener('submit', async (e) => {
       alert('¡Bienvenido ' + data.usuario.nombre + '!');
       window.location.hash = '#inicio';
     } else {
-      alert(data.error);
+      alert(data.error || 'Error en las credenciales');
     }
   } catch (err) {
     console.error(err);
