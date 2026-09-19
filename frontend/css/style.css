@@ -1,6 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;600&family=Work+Sans:wght@400;600&display=swap');
+/* Importación de las tipografías oficiales de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap');
 
-/* Variables de color de Raíz Andina */
+/* ==========================================
+   1. VARIABLES CSS OFICIALES (Mockup)
+   ========================================== */
 :root {
   --verde-andino: #1F3D33;
   --musgo: #2F5D50;
@@ -12,14 +15,6 @@
 
   --font-serif: 'Fraunces', serif;
   --font-sans: 'Work Sans', sans-serif;
-}
-
-/* Modo Oscuro (Alternativo) */
-[data-theme="dark"] {
-  --papel: #1A2621;
-  --tinta: #F4F1E6;
-  --niebla: #2F5D50;
-  --verde-andino: #12241E;
 }
 
 * {
@@ -34,23 +29,63 @@ body {
   font-family: var(--font-sans);
   font-size: 17px;
   line-height: 1.65;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
-/* Encabezado fijo (Sticky Header) */
-.navbar {
+/* ==========================================
+   2. TIPOGRAFÍAS
+   ========================================== */
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  color: var(--verde-andino);
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: 2.8rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--niebla);
+  padding-bottom: 0.5rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+/* ==========================================
+   3. BARRA DE NAVEGACIÓN (Sticky 76px)
+   ========================================== */
+header {
+  background-color: var(--verde-andino);
+  height: 76px;
   position: sticky;
   top: 0;
-  height: 76px;
-  background-color: var(--verde-andino);
-  color: var(--papel);
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.navbar {
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
-  z-index: 1000;
 }
 
-.navbar .logo {
+.logo {
   font-family: var(--font-serif);
   font-size: 1.5rem;
   font-weight: 600;
@@ -60,16 +95,17 @@ body {
 
 .nav-links {
   display: flex;
-  gap: 1.5rem;
   list-style: none;
+  gap: 1.5rem;
+  align-items: center;
 }
 
 .nav-links a {
-  color: var(--papel);
   text-decoration: none;
-  font-weight: 600;
+  color: var(--papel);
+  font-weight: 500;
   font-size: 15px;
-  transition: color 0.3s;
+  transition: color 0.2s ease;
 }
 
 .nav-links a:hover,
@@ -77,64 +113,79 @@ body {
   color: var(--oro-cordillera);
 }
 
-.btn-primary {
+.btn-login-nav {
   background-color: var(--oro-cordillera);
-  color: var(--tinta);
-  padding: 0.6rem 1.2rem;
-  border: none;
+  color: var(--tinta) !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 1.2rem;
   border-radius: 4px;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-block;
-  transition: background-color 0.3s;
+  transition: background-color 0.2s ease !important;
 }
 
-.btn-primary:hover {
-  background-color: var(--oro-suave);
+.btn-login-nav:hover {
+  background-color: var(--oro-suave) !important;
 }
 
-/* Manejo de Vistas (Secciones) */
-.view {
-  display: none;
-  padding: 3rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
+/* ==========================================
+   4. CONTENIDO PRINCIPAL Y SECCIONES
+   ========================================== */
+main {
+  flex: 1;
+  max-width: 1100px;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
 }
 
-.view.active {
-  display: block;
+.container-page {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid var(--niebla);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
 }
 
-/* Estilos de Títulos */
-h1, h2, h3 {
+/* Hero y Cifras */
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.cifras-grid {
+  display: flex;
+  gap: 2rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--niebla);
+}
+
+.cifra-item {
+  text-align: center;
+}
+
+.cifra-numero {
   font-family: var(--font-serif);
-  color: var(--verde-andino);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--oro-cordillera);
 }
 
-[data-theme="dark"] h1, 
-[data-theme="dark"] h2, 
-[data-theme="dark"] h3 {
-  color: var(--oro-suave);
-}
-
-h1 { font-size: 2.8rem; line-height: 1.12; margin-bottom: 1rem; }
-h2 { font-size: 2.2rem; line-height: 1.15; margin-bottom: 1.5rem; }
-h3 { font-size: 1.3rem; line-height: 1.2; }
-
-/* Cuadrícula de Productos */
+/* Retícula de Productos (Asimétrica) */
 .grid-productos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .card-producto {
-  background: var(--niebla);
-  padding: 1.5rem;
-  border-radius: 8px;
+  background-color: var(--papel);
   border: 1px solid var(--niebla);
+  border-radius: 6px;
+  padding: 1.5rem;
 }
 
 .card-producto.destacado {
@@ -147,40 +198,73 @@ h3 { font-size: 1.3rem; line-height: 1.2; }
   color: var(--oro-suave);
 }
 
-/* Formularios (Contacto y Login) */
+.card-producto .precio {
+  font-weight: 600;
+  color: var(--oro-cordillera);
+  margin-top: 0.5rem;
+}
+
+/* Botones */
+.btn-primary {
+  background-color: var(--verde-andino);
+  color: var(--papel);
+  border: none;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: var(--musgo);
+}
+
+/* Formulario Login y Contacto */
 .form-container {
-  max-width: 450px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: var(--niebla);
-  border-radius: 8px;
+  max-width: 420px;
+  margin: 1.5rem auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
 }
 
 .form-group {
-  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 0.4rem;
   font-weight: 600;
+  font-size: 14px;
 }
 
-.form-group input,
+.form-group input, 
 .form-group textarea {
-  width: 100%;
-  padding: 0.7rem;
-  border: 1px solid var(--musgo);
+  padding: 0.75rem;
+  border: 1px solid var(--niebla);
   border-radius: 4px;
-  background: var(--papel);
-  color: var(--tinta);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  background-color: var(--papel);
 }
 
-/* Pie de Página */
+.form-group input:focus, 
+.form-group textarea:focus {
+  outline: 2px solid var(--oro-cordillera);
+}
+
+/* Footer */
 footer {
   background-color: var(--verde-andino);
   color: var(--papel);
   text-align: center;
   padding: 2rem;
-  margin-top: 4rem;
+  margin-top: auto;
+  font-size: 14px;
 }
