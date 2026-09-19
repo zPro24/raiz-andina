@@ -2,6 +2,37 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap');
 
 /* ==========================================
+   CORRECCIÓN PARA PRODUCTOS EN MÓVILES
+   ========================================== */
+@media (max-width: 840px) {
+
+  /* 1. Forzar contenedor general a no desbordar */
+  .container-page {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden; /* Evita cualquier desborde lateral */
+  }
+
+  /* 2. Rejilla de productos en 1 sola columna */
+  .grid-productos {
+    display: grid !important;
+    grid-template-columns: 1fr !important; /* Coloca 1 sola tarjeta por fila */
+    width: 100% !important;
+    gap: 1.2rem !important;
+    box-sizing: border-box;
+  }
+
+  /* 3. Tarjeta destacada y tarjetas normales al 100% de ancho */
+  .card-producto,
+  .card-producto.destacado {
+    grid-column: span 1 !important; /* Quita el espacio doble a la destacada */
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+}
+
+/* ==========================================
    AJUSTE RESPONSIVO PARA MÓVILES (< 840px)
    ========================================== */
 @media (max-width: 840px) {
