@@ -21,19 +21,66 @@
   </header>
 
   <main>
-    <section class="container-page">
-      <h2>Iniciar sesión</h2>
-      <form id="form-login" class="form-container">
-        <div class="form-group">
-          <label for="correo">Correo electrónico</label>
-          <input type="email" id="correo" required placeholder="usuario@ejemplo.com">
-        </div>
-        <div class="form-group">
-          <label for="password">Contraseña</label>
-          <input type="password" id="password" required placeholder="pepitoperez123">
-        </div>
-        <button type="submit" class="btn-primary">Entrar</button>
-      </form>
+    <section class="container-page login-grid">
+      <!-- PANEL LATERAL (Fondo oscuro) -->
+      <div class="panel-bienvenida">
+        <h2 id="panel-titulo">¡Bienvenido de nuevo!</h2>
+        <p id="panel-desc">Accede a tu cuenta para gestionar tus pedidos y conocer más sobre nuestras iniciativas de comercio justo.</p>
+      </div>
+
+      <!-- FORMULARIO DE ACCESO (LOGIN) -->
+      <div class="form-acceso" id="sec-login">
+        <h2>Iniciar sesión</h2>
+        <form id="form-login">
+          <div class="form-group">
+            <label for="correo">Correo electrónico</label>
+            <input type="email" id="correo" required placeholder="correo@ejemplo.com">
+          </div>
+
+          <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" required placeholder="••••••••">
+          </div>
+
+          <div class="form-checkbox">
+            <input type="checkbox" id="recordarme">
+            <label for="recordarme">Recordarme en este equipo</label>
+          </div>
+
+          <button type="submit" class="btn-primary btn-block">Entrar</button>
+
+          <div class="login-footer-links">
+            <p>¿No tienes una cuenta? <a href="#" id="link-ir-registro">Regístrate aquí</a></p>
+          </div>
+        </form>
+      </div>
+
+      <!-- FORMULARIO DE REGISTRO (OCULTO POR DEFECTO) -->
+      <div class="form-acceso" id="sec-registro" style="display: none;">
+        <h2>Crear una cuenta</h2>
+        <form id="form-register">
+          <div class="form-group">
+            <label for="reg-nombre">Nombre completo</label>
+            <input type="text" id="reg-nombre" required placeholder="Tu nombre">
+          </div>
+
+          <div class="form-group">
+            <label for="reg-correo">Correo electrónico</label>
+            <input type="email" id="reg-correo" required placeholder="correo@ejemplo.com">
+          </div>
+
+          <div class="form-group">
+            <label for="reg-password">Contraseña</label>
+            <input type="password" id="reg-password" required placeholder="••••••••">
+          </div>
+
+          <button type="submit" class="btn-primary btn-block">Registrarse</button>
+
+          <div class="login-footer-links">
+            <p>¿Ya tienes una cuenta? <a href="#" id="link-ir-login">Inicia sesión aquí</a></p>
+          </div>
+        </form>
+      </div>
     </section>
   </main>
 
