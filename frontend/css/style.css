@@ -268,3 +268,42 @@ footer {
   margin-top: auto;
   font-size: 14px;
 }
+
+/* Estilos para la sección Hero con Imagen */
+.hero-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.hero-buttons {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-secondary {
+  background-color: var(--musgo) !important;
+}
+
+.btn-secondary:hover {
+  background-color: var(--verde-andino) !important;
+}
+
+.hero-image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 1px solid var(--niebla);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}

@@ -23,14 +23,14 @@
   <main>
     <section class="container-page">
       <div class="hero-section">
-        <div>
+        <!-- Columna Izquierda: Texto, Botones y Cifras -->
+        <div class="hero-content">
           <h1>Comercio Justo y Origen Colombiano</h1>
           <p>Conectamos la riqueza cultural de nuestras comunidades andinas con productos sostenibles y de alta calidad.</p>
-          <br>
-          <a href="productos.html" class="btn-primary">Ver productos</a>
-          <a href="nosotros.html" class="btn-primary" style="background-color: var(--musgo); margin-left: 0.5rem;">Conocer la historia</a>
-        </div>
-        <div>
+          <div class="hero-buttons">
+            <a href="productos.html" class="btn-primary">Ver productos</a>
+            <a href="nosotros.html" class="btn-primary btn-secondary">Conocer la historia</a>
+          </div>
           <div class="cifras-grid">
             <div class="cifra-item">
               <div class="cifra-numero">150+</div>
@@ -45,6 +45,11 @@
               <div>Regiones</div>
             </div>
           </div>
+        </div>
+
+        <!-- Columna Derecha: IMAGEN / GRÁFICO HERO -->
+        <div class="hero-image">
+          <img src="./assets/img/cafe.jpeg" alt="Café de origen Raíz Andina">
         </div>
       </div>
     </section>
