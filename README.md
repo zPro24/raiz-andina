@@ -115,6 +115,5 @@ El servidor responderá en `http://localhost:5000`.
 
 ## 👥 Equipo de Desarrollo
 
-* **Darwin Velásquez**
 * **Álvaro Martínez**
 * **Jesús Gómez**
