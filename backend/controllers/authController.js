@@ -70,4 +70,44 @@ exports.login = async (req, res) => {
     console.error(err);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
+  
+};
+
+exports.updatePassword = async (req, res) => {
+  try {
+    const { passActual, passNueva, email } = req.body;
+
+    // 1. Validar que vengan los datos requeridos
+    if (!passActual || !passNueva) {
+      return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+    }
+
+    // 2. Buscar al usuario por correo (o por ID si usas token)
+    const userResult = await pool.query('SELECT * FROM usuarios WHERE email = $1', [email]);
+    
+    if (userResult.rows.length === 0) {
+      return res.status(444).json({ error: 'Usuario no encontrado' });
+    }
+
+    const usuario = userResult.rows[0];
+
+    // 3. Verificar si la contraseña actual ingresada coincide con la BD
+    const passwordCorrecto = await bcrypt.compare(passActual, usuario.password);
+    if (!passwordCorrecto) {
+      return res.status(400).json({ error: 'La contraseña actual es incorrecta' });
+    }
+
+    // 4. Encriptar la nueva contraseña
+    const salt = await bcrypt.genSalt(10);
+    const newHashedPassword = await bcrypt.hash(passNueva, salt);
+
+    // 5. Actualizar en la base de datos
+    await pool.query('UPDATE usuarios SET password = $1 WHERE email = $2', [newHashedPassword, email]);
+
+    return res.json({ mensaje: 'Contraseña actualizada con éxito' });
+
+  } catch (error) {
+    console.error('Error al actualizar contraseña:', error);
+    return res.status(500).json({ error: 'Error interno del servidor' });
+  }
 };
