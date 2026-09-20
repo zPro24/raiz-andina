@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raíz Andina - Panel Privado</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <a href="index.html" class="logo">🌿 Raíz Andina</a>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="nosotros.html">Quiénes somos</a></li>
+        <li><a href="productos.html">Productos</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><button id="btn-logout" class="btn-primary" style="background-color: #a93226;">Cerrar sesión</button></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="container-page" style="max-width: 600px; margin: 2rem auto;">
+      <h2 id="bienvenida-usuario">Mi Cuenta</h2>
+      <p>Bienvenido al área privada de Raíz Andina.</p>
+
+      <br>
+      <div style="border-top: 1px solid var(--niebla); padding-top: 1.5rem;">
+        <h3>Actualizar contraseña</h3>
+        <form id="form-cambiar-password" class="form-container" style="max-width: 100%; margin-top: 1rem;">
+          <div class="form-group">
+            <label for="pass-actual">Contraseña actual</label>
+            <input type="password" id="pass-actual" required placeholder="••••••••">
+          </div>
+          <div class="form-group">
+            <label for="pass-nueva">Nueva contraseña</label>
+            <input type="password" id="pass-nueva" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn-primary">Actualizar contraseña</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
+  </footer>
+
+  <script src="js/auth.js"></script>
+</body>
+</html>

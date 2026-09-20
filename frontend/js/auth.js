@@ -1,39 +1,13 @@
 document.addEventListener('DOMContentLoaded', () => {
   const formLogin = document.getElementById('form-login');
   const formRegister = document.getElementById('form-register');
+  const formCambiarPassword = document.getElementById('form-cambiar-password');
+  const btnLogout = document.getElementById('btn-logout');
 
-  const secLogin = document.getElementById('sec-login');
-  const secRegistro = document.getElementById('sec-registro');
+  // URL Base de tu Backend en Render
+  const API_URL = 'https://backend-web-sz3a.onrender.com/api/auth';
 
-  const linkIrRegistro = document.getElementById('link-ir-registro');
-  const linkIrLogin = document.getElementById('link-ir-login');
-
-  const panelTitulo = document.getElementById('panel-titulo');
-  const panelDesc = document.getElementById('panel-desc');
-
-  // Alternar a Formulario de Registro
-  if (linkIrRegistro) {
-    linkIrRegistro.addEventListener('click', (e) => {
-      e.preventDefault();
-      secLogin.style.display = 'none';
-      secRegistro.style.display = 'block';
-      panelTitulo.textContent = '¡Únete a Raíz Andina!';
-      panelDesc.textContent = 'Crea tu cuenta para formar parte de la red de comercio justo y apoyo comunitario.';
-    });
-  }
-
-  // Alternar a Formulario de Login
-  if (linkIrLogin) {
-    linkIrLogin.addEventListener('click', (e) => {
-      e.preventDefault();
-      secRegistro.style.display = 'none';
-      secLogin.style.display = 'block';
-      panelTitulo.textContent = '¡Bienvenido de nuevo!';
-      panelDesc.textContent = 'Accede a tu cuenta para gestionar tus pedidos y conocer más sobre nuestras iniciativas de comercio justo.';
-    });
-  }
-
-  // Lógica de Inicio de Sesión
+  // 1. Redirección en login exitoso
   if (formLogin) {
     formLogin.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -41,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const password = document.getElementById('password').value;
 
       try {
-        const res = await fetch('https://backend-web-sz3a.onrender.com/api/auth/login', {
+        const res = await fetch(`${API_URL}/login`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })
@@ -51,8 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (res.ok) {
           localStorage.setItem('token', data.token);
-          alert('¡Bienvenido/a ' + (data.usuario?.nombre || 'usuario') + '!');
-          window.location.href = 'index.html';
+          if (data.usuario?.nombre) {
+            localStorage.setItem('usuarioNombre', data.usuario.nombre);
+          }
+          // Redirigir al nuevo panel privado
+          window.location.href = 'panel.html';
         } else {
           alert(data.error || 'Credenciales inválidas');
         }
@@ -63,32 +40,61 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Lógica de Registro de Usuario
-  if (formRegister) {
-    formRegister.addEventListener('submit', async (e) => {
+  // 2. Protección de la ruta panel.html (Verificar si está autenticado)
+  if (window.location.pathname.includes('panel.html')) {
+    const token = localStorage.getItem('token');
+    const usuarioNombre = localStorage.getItem('usuarioNombre');
+
+    if (!token) {
+      alert('Debes iniciar sesión para acceder a esta página.');
+      window.location.href = 'login.html';
+      return;
+    }
+
+    const bienvenida = document.getElementById('bienvenida-usuario');
+    if (bienvenida && usuarioNombre) {
+      bienvenida.textContent = `Bienvenido/a, ${usuarioNombre}`;
+    }
+  }
+
+  // 3. Botón Cerrar Sesión
+  if (btnLogout) {
+    btnLogout.addEventListener('click', () => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('usuarioNombre');
+      alert('Has cerrado sesión correctamente.');
+      window.location.href = 'login.html';
+    });
+  }
+
+  // 4. Formulario de Actualizar Contraseña
+  if (formCambiarPassword) {
+    formCambiarPassword.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const nombre = document.getElementById('reg-nombre').value;
-      const email = document.getElementById('reg-correo').value;
-      const password = document.getElementById('reg-password').value;
+      const passActual = document.getElementById('pass-actual').value;
+      const passNueva = document.getElementById('pass-nueva').value;
+      const token = localStorage.getItem('token');
 
       try {
-        const res = await fetch('https://backend-web-sz3a.onrender.com/api/auth/register', {
+        const res = await fetch(`${API_URL}/update-password`, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ nombre, email, password })
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ passActual, passNueva })
         });
 
         const data = await res.json();
 
         if (res.ok) {
-          alert('¡Registro exitoso! Ya puedes iniciar sesión con tu cuenta.');
-          // Volver al formulario de login
-          linkIrLogin.click();
+          alert('¡Contraseña actualizada con éxito!');
+          formCambiarPassword.reset();
         } else {
-          alert(data.error || 'Error al registrar el usuario.');
+          alert(data.error || 'No se pudo actualizar la contraseña.');
         }
       } catch (err) {
-        console.error('Error en el registro:', err);
+        console.error('Error al actualizar contraseña:', err);
         alert('Error al conectar con el servidor.');
       }
     });
