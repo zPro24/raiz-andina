@@ -111,3 +111,57 @@ exports.updatePassword = async (req, res) => {
     return res.status(500).json({ error: 'Error interno del servidor' });
   }
 };
+
+// Obtener perfil del usuario
+exports.getProfile = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    const result = await pool.query(
+      'SELECT id, nombre, email, telefono, direccion FROM usuarios WHERE email = $1',
+      [email]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    return res.json(result.rows[0]);
+  } catch (error) {
+    console.error('Error al obtener perfil:', error);
+    return res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};
+
+// Actualizar datos del perfil
+exports.updateProfile = async (req, res) => {
+  try {
+    const { email, nombre, telefono, direccion } = req.body;
+
+    if (!email) {
+      return res.status(400).json({ error: 'El correo electrónico es requerido' });
+    }
+
+    const result = await pool.query(
+      `UPDATE usuarios 
+       SET nombre = COALESCE($1, nombre), 
+           telefono = $2, 
+           direccion = $3 
+       WHERE email = $4 
+       RETURNING id, nombre, email, telefono, direccion`,
+      [nombre, telefono, direccion, email]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+
+    return res.json({
+      mensaje: 'Perfil actualizado exitosamente',
+      usuario: result.rows[0]
+    });
+  } catch (error) {
+    console.error('Error al actualizar perfil:', error);
+    return res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};

@@ -1,89 +1,82 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // 1. Verificar si el usuario está autenticado
-  const token = localStorage.getItem('token');
+const API_URL = 'https://backend-web-sz3a.onrender.com/api/auth';
   const usuarioEmail = localStorage.getItem('usuarioEmail');
-  const usuarioNombre = localStorage.getItem('usuarioNombre');
+  const token = localStorage.getItem('token');
 
-  if (!token) {
-    alert('Debes iniciar sesión para acceder al panel.');
-    window.location.href = 'login.html';
-    return;
-  }
+  // --- Cargar datos del perfil desde el backend ---
+  async function cargarDatosPerfil() {
+    if (!usuarioEmail) return;
 
-  // 2. Cargar datos del usuario en la interfaz
-  const bienvenida = document.getElementById('bienvenida-usuario');
-  const sidebarEmail = document.getElementById('sidebar-usuario-email');
-  const sidebarNombre = document.getElementById('sidebar-usuario-nombre');
+    try {
+      const res = await fetch(`${API_URL}/profile/${usuarioEmail}`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
 
-  if (bienvenida && usuarioNombre) bienvenida.textContent = `Bienvenido/a, ${usuarioNombre}`;
-  if (sidebarNombre && usuarioNombre) sidebarNombre.textContent = usuarioNombre;
-  if (sidebarEmail && usuarioEmail) sidebarEmail.textContent = usuarioEmail;
+      if (res.ok) {
+        const data = await res.json();
+        // Rellenar campos del formulario de perfil
+        if (document.getElementById('perfil-nombre')) {
+          document.getElementById('perfil-nombre').value = data.nombre || '';
+        }
+        if (document.getElementById('perfil-telefono')) {
+          document.getElementById('perfil-telefono').value = data.telefono || '';
+        }
+        if (document.getElementById('perfil-direccion')) {
+          document.getElementById('perfil-direccion').value = data.direccion || '';
+        }
 
-  // 3. Lógica de Pestañas (Tabs) del Sidebar
-  const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
-  const tabContents = document.querySelectorAll('.tab-content');
-
-  navItems.forEach(button => {
-    button.addEventListener('click', () => {
-      const targetTab = button.getAttribute('data-tab');
-
-      // Desactivar todas las pestañas
-      navItems.forEach(btn => btn.classList.remove('active'));
-      tabContents.forEach(tab => tab.classList.remove('active'));
-
-      // Activar la pestaña seleccionada
-      button.classList.add('active');
-      const activeSection = document.getElementById(targetTab);
-      if (activeSection) {
-        activeSection.classList.add('active');
+        // Actualizar nombre en la interfaz si cambió
+        if (data.nombre) {
+          localStorage.setItem('usuarioNombre', data.nombre);
+          const sidebarNombre = document.getElementById('sidebar-usuario-nombre');
+          const bienvenida = document.getElementById('bienvenida-usuario');
+          if (sidebarNombre) sidebarNombre.textContent = data.nombre;
+          if (bienvenida) bienvenida.textContent = `Bienvenido/a, ${data.nombre}`;
+        }
       }
-    });
-  });
-
-  // 4. Botón Cerrar Sesión
-  const btnLogout = document.getElementById('btn-logout');
-  if (btnLogout) {
-    btnLogout.addEventListener('click', () => {
-      localStorage.removeItem('token');
-      localStorage.removeItem('usuarioNombre');
-      localStorage.removeItem('usuarioEmail');
-      alert('Has cerrado sesión correctamente.');
-      window.location.href = 'login.html';
-    });
+    } catch (err) {
+      console.error('Error al cargar datos del perfil:', err);
+    }
   }
 
-  // 5. Formulario de Cambiar Contraseña desde el Panel
-  const formCambiarPassword = document.getElementById('form-cambiar-password');
-  if (formCambiarPassword) {
-    formCambiarPassword.addEventListener('submit', async (e) => {
+  // Llamar la función al cargar la página
+  cargarDatosPerfil();
+
+  // --- Enviar el formulario de Actualizar Perfil ---
+  const formPerfil = document.getElementById('form-perfil');
+  if (formPerfil) {
+    formPerfil.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const passActual = document.getElementById('pass-actual').value;
-      const passNueva = document.getElementById('pass-nueva').value;
-      const email = localStorage.getItem('usuarioEmail');
-      const token = localStorage.getItem('token');
+
+      const nombre = document.getElementById('perfil-nombre').value;
+      const telefono = document.getElementById('perfil-telefono').value;
+      const direccion = document.getElementById('perfil-direccion').value;
 
       try {
-        const res = await fetch('https://backend-web-sz3a.onrender.com/api/auth/update-password', {
-          method: 'POST',
+        const res = await fetch(`${API_URL}/update-profile`, {
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
-          body: JSON.stringify({ email, passActual, passNueva })
+          body: JSON.stringify({
+            email: usuarioEmail,
+            nombre,
+            telefono,
+            direccion
+          })
         });
 
         const data = await res.json();
 
         if (res.ok) {
-          alert('¡Contraseña actualizada con éxito!');
-          formCambiarPassword.reset();
+          alert('¡Perfil actualizado con éxito!');
+          cargarDatosPerfil(); // Recargar datos actualizados
         } else {
-          alert(data.error || 'No se pudo actualizar la contraseña.');
+          alert(data.error || 'No se pudo actualizar el perfil.');
         }
       } catch (err) {
-        console.error('Error al actualizar contraseña:', err);
+        console.error('Error al guardar el perfil:', err);
         alert('Error al conectar con el servidor.');
       }
     });
   }
-});

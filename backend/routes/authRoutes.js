@@ -11,4 +11,7 @@ router.post('/login', authController.login);
 router.post('/update-password', authController.updatePassword); 
 // Si usas middleware, quedaría: router.post('/update-password', verifyToken, authController.updatePassword);
 
+router.get('/profile/:email', authController.getProfile);
+router.put('/update-profile', authController.updateProfile);
+
 module.exports = router;
