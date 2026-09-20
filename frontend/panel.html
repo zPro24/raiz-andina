@@ -3,50 +3,177 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Raíz Andina - Panel Privado</title>
+  <title>Raíz Andina - Panel de Usuario</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <!-- Header Principal -->
   <header>
     <nav class="navbar">
       <a href="index.html" class="logo">🌿 Raíz Andina</a>
       <ul class="nav-links">
         <li><a href="index.html">Inicio</a></li>
-        <li><a href="nosotros.html">Quiénes somos</a></li>
         <li><a href="productos.html">Productos</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
-        <li><button id="btn-logout" class="btn-primary" style="background-color: #a93226;">Cerrar sesión</button></li>
+        <li><button id="btn-logout" class="btn-primary" style="background-color: #a93226; border: none; cursor: pointer;">Cerrar sesión</button></li>
       </ul>
     </nav>
   </header>
 
-  <main>
-    <section class="container-page" style="max-width: 600px; margin: 2rem auto;">
-      <h2 id="bienvenida-usuario">Mi Cuenta</h2>
-      <p>Bienvenido al área privada de Raíz Andina.</p>
+  <!-- Layout del Panel con Sidebar -->
+  <div class="panel-layout">
+    <!-- Sidebar / Menú Lateral -->
+    <aside class="sidebar">
+      <div class="user-card-mini">
+        <div class="avatar">👤</div>
+        <h4 id="sidebar-usuario-nombre">Usuario</h4>
+        <p id="sidebar-usuario-email" class="text-muted">cargando...</p>
+      </div>
 
-      <br>
-      <div style="border-top: 1px solid var(--niebla); padding-top: 1.5rem;">
-        <h3>Actualizar contraseña</h3>
-        <form id="form-cambiar-password" class="form-container" style="max-width: 100%; margin-top: 1rem;">
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-tab="tab-resumen">
+          <span class="icon">📊</span> Resumen & Impacto
+        </button>
+        <button class="nav-item" data-tab="tab-perfil">
+          <span class="icon">👤</span> Mi Perfil
+        </button>
+        <button class="nav-item" data-tab="tab-pedidos">
+          <span class="icon">📦</span> Mis Pedidos
+        </button>
+        <button class="nav-item" data-tab="tab-favoritos">
+          <span class="icon">❤️</span> Mis Favoritos
+        </button>
+        <button class="nav-item" data-tab="tab-seguridad">
+          <span class="icon">🔒</span> Seguridad
+        </button>
+      </nav>
+    </aside>
+
+    <!-- Contenido Principal Cambiante -->
+    <main class="panel-content">
+      
+      <!-- Pestaña 1: Resumen & Impacto -->
+      <section id="tab-resumen" class="tab-content active">
+        <h2 id="bienvenida-usuario">Bienvenido/a</h2>
+        <p>Gracias por formar parte de la red de comercio justo de Raíz Andina.</p>
+
+        <!-- Métricas de Impacto -->
+        <div class="stats-grid" style="margin-top: 1.5rem;">
+          <div class="stat-card">
+            <h3>🌱 Mi Huella Andina</h3>
+            <p class="stat-value">2 Cajas</p>
+            <p class="stat-desc">Café de origen apoyado</p>
+          </div>
+          <div class="stat-card">
+            <h3>🧑‍🌾 Familias Apoyadas</h3>
+            <p class="stat-value">3 Familias</p>
+            <p class="stat-desc">En la región de Zapatoca</p>
+          </div>
+          <div class="stat-card">
+            <h3>🌳 Metros protegidos</h3>
+            <p class="stat-value">15 m²</p>
+            <p class="stat-desc">De bosque andino sostenible</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pestaña 2: Mi Perfil -->
+      <section id="tab-perfil" class="tab-content">
+        <h2>Mi Perfil</h2>
+        <p>Gestiona tus datos personales y dirección de envío.</p>
+        
+        <form id="form-perfil" class="form-container" style="max-width: 100%; margin-top: 1.5rem;">
           <div class="form-group">
-            <label for="pass-actual">Contraseña actual</label>
+            <label for="perfil-nombre">Nombre Completo</label>
+            <input type="text" id="perfil-nombre" placeholder="Tu nombre">
+          </div>
+          <div class="form-group">
+            <label for="perfil-telefono">Teléfono / WhatsApp</label>
+            <input type="tel" id="perfil-telefono" placeholder="+57 300 123 4567">
+          </div>
+          <div class="form-group">
+            <label for="perfil-direccion">Dirección de Envío Principal</label>
+            <input type="text" id="perfil-direccion" placeholder="Calle, Número, Ciudad, Departamento">
+          </div>
+          <button type="button" class="btn-primary" onclick="alert('Datos de perfil guardados en almacenamiento local.')">Guardar Cambios</button>
+        </form>
+      </section>
+
+      <!-- Pestaña 3: Mis Pedidos -->
+      <section id="tab-pedidos" class="tab-content">
+        <h2>Mis Pedidos</h2>
+        <p>Historial de compras registradas en tu cuenta.</p>
+        
+        <div class="table-responsive" style="margin-top: 1.5rem;">
+          <table class="table-custom">
+            <thead>
+              <tr>
+                <th># Pedido</th>
+                <th>Fecha</th>
+                <th>Productos</th>
+                <th>Total</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#RA-1024</td>
+                <td>12 Sep 2026</td>
+                <td>2x Café de Origen Especial</td>
+                <td>$64.000 COP</td>
+                <td><span class="badge badge-success">Entregado</span></td>
+              </tr>
+              <tr>
+                <td>#RA-1089</td>
+                <td>18 Sep 2026</td>
+                <td>1x Cacao Orgánico Zapatoca</td>
+                <td>$18.000 COP</td>
+                <td><span class="badge badge-warning">En camino</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Pestaña 4: Mis Favoritos -->
+      <section id="tab-favoritos" class="tab-content">
+        <h2>Mis Favoritos</h2>
+        <p>Productos que has guardado para comprar más adelante.</p>
+
+        <div class="grid-productos" style="margin-top: 1.5rem;">
+          <div class="card-producto">
+            <h3>Miel de Abejas de Montaña</h3>
+            <p><strong>Origen:</strong> Zapatoca · 100% Pura</p>
+            <p class="precio">$22.000 COP</p>
+            <a href="productos.html" class="btn-primary" style="display:inline-block; text-decoration:none; margin-top:0.5rem;">Ver en catálogo</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pestaña 5: Seguridad -->
+      <section id="tab-seguridad" class="tab-content">
+        <h2>Seguridad de la Cuenta</h2>
+        <p>Actualiza tu contraseña para mantener tu cuenta segura.</p>
+
+        <form id="form-cambiar-password" class="form-container" style="max-width: 100%; margin-top: 1.5rem;">
+          <div class="form-group">
+            <label for="pass-actual">Contraseña Actual</label>
             <input type="password" id="pass-actual" required placeholder="••••••••">
           </div>
           <div class="form-group">
-            <label for="pass-nueva">Nueva contraseña</label>
+            <label for="pass-nueva">Nueva Contraseña</label>
             <input type="password" id="pass-nueva" required placeholder="••••••••">
           </div>
-          <button type="submit" class="btn-primary">Actualizar contraseña</button>
+          <button type="submit" class="btn-primary">Actualizar Contraseña</button>
         </form>
-      </div>
-    </section>
-  </main>
+      </section>
+
+    </main>
+  </div>
 
   <footer>
     <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
   </footer>
 
-  <script src="js/auth.js"></script>
+  <script src="js/panel.js"></script>
 </body>
 </html>

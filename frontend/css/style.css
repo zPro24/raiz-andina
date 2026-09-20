@@ -2,6 +2,188 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap');
 
 /* ==========================================
+   ESTILOS PARA EL PANEL CON SIDEBAR
+   ========================================== */
+.panel-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 160px);
+  max-width: 1200px;
+  margin: 1.5rem auto;
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  height: fit-content;
+}
+
+.user-card-mini {
+  text-align: center;
+  padding-bottom: 1.2rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.user-card-mini .avatar {
+  font-size: 2.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.user-card-mini h4 {
+  margin: 0;
+  color: var(--verde-andino, #1b3b2b);
+}
+
+.user-card-mini p {
+  font-size: 13px;
+  color: #666;
+  margin: 0.2rem 0 0 0;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.sidebar-nav .nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-nav .nav-item:hover,
+.sidebar-nav .nav-item.active {
+  background-color: var(--verde-andino, #1b3b2b);
+  color: #ffffff;
+}
+
+/* Panel Content y Tabs */
+.panel-content {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Tarjetas de Estadísticas */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background-color: #f9f9f6;
+  border: 1px solid #e2e2d8;
+  border-radius: 10px;
+  padding: 1.2rem;
+  text-align: center;
+}
+
+.stat-card h3 {
+  font-size: 1rem;
+  color: var(--verde-andino, #1b3b2b);
+  margin-bottom: 0.5rem;
+}
+
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: var(--oro-cordillera, #c29b38);
+  margin: 0.3rem 0;
+}
+
+.stat-desc {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0;
+}
+
+/* Tablas Responsivas */
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.table-custom th,
+.table-custom td {
+  padding: 0.8rem;
+  border-bottom: 1px solid #eee;
+}
+
+.table-custom th {
+  background-color: #f5f5f0;
+  color: var(--verde-andino, #1b3b2b);
+}
+
+.badge {
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.badge-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+/* Responsivo para Celulares */
+@media (max-width: 840px) {
+  .panel-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+
+  .sidebar-nav .nav-item {
+    white-space: nowrap;
+    font-size: 13px;
+    padding: 0.6rem 0.8rem;
+  }
+}
+
+/* ==========================================
    CORRECCIÓN PARA PRODUCTOS EN MÓVILES
    ========================================== */
 @media (max-width: 840px) {
