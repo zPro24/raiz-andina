@@ -11,7 +11,13 @@
   <header>
     <nav class="navbar">
       <a href="index.html" class="logo">🌿 Raíz Andina</a>
-      <ul class="nav-links">
+      
+      <!-- Botón de menú para móvil -->
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú">
+        ☰
+      </button>
+
+      <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="productos.html">Productos</a></li>
         <li><button id="btn-logout" class="btn-primary btn-logout" type="button">Cerrar sesión</button></li>
@@ -24,17 +30,19 @@
   <!-- Layout del Panel con Sidebar -->
   <div class="panel-layout">
 
-    <!-- Sidebar / Menú Lateral -->
+    <!-- Sidebar / Menú Lateral (En móvil pasa a deslizarse o convertirse en menú horizontal/tabs) -->
     <aside class="sidebar">
       <div class="user-card-mini">
         <div class="avatar">👤</div>
-        <h4 id="sidebar-usuario-nombre">Cargando...</h4>
-        <p id="sidebar-usuario-email" class="text-muted">cargando...</p>
+        <div>
+          <h4 id="sidebar-usuario-nombre">Cargando...</h4>
+          <p id="sidebar-usuario-email" class="text-muted">cargando...</p>
+        </div>
       </div>
 
       <nav class="sidebar-nav">
         <button type="button" class="nav-item active" data-tab="tab-resumen">
-          <span class="icon">📊</span> Resumen &amp; Impacto
+          <span class="icon">📊</span> Resumen
         </button>
         <button type="button" class="nav-item" data-tab="tab-perfil">
           <span class="icon">👤</span> Mi Perfil
@@ -51,7 +59,7 @@
       </nav>
     </aside>
 
-    <!-- Contenido Principal Cambiante -->
+    <!-- Contenido Principal -->
     <main class="panel-content">
 
       <!-- Pestaña 1: Resumen & Impacto -->
@@ -59,8 +67,7 @@
         <h2 id="bienvenida-usuario">Bienvenido/a</h2>
         <p>Gracias por formar parte de la red de comercio justo de Raíz Andina.</p>
 
-        <!-- Métricas de Impacto -->
-        <div class="stats-grid" style="margin-top: 1.5rem;">
+        <div class="stats-grid">
           <div class="stat-card">
             <h3>🌱 Mi Huella Andina</h3>
             <p class="stat-value">2 Cajas</p>
@@ -84,7 +91,7 @@
         <h2>Mi Perfil</h2>
         <p>Gestiona tus datos personales y dirección de envío.</p>
 
-        <form id="form-perfil" class="form-container" style="max-width: 100%; margin-top: 1.5rem;">
+        <form id="form-perfil" class="form-container">
           <div class="form-group">
             <label for="perfil-nombre">Nombre Completo</label>
             <input type="text" id="perfil-nombre" placeholder="Tu nombre">
@@ -97,7 +104,7 @@
             <label for="perfil-direccion">Dirección de Envío Principal</label>
             <input type="text" id="perfil-direccion" placeholder="Calle, Número, Ciudad, Departamento">
           </div>
-          <button type="submit" class="btn-primary">Guardar Cambios</button>
+          <button type="submit" class="btn-primary btn-block">Guardar Cambios</button>
         </form>
       </section>
 
@@ -106,7 +113,7 @@
         <h2>Mis Pedidos</h2>
         <p>Historial de compras registradas en tu cuenta.</p>
 
-        <div class="table-responsive" style="margin-top: 1.5rem;">
+        <div class="table-responsive">
           <table class="table-custom">
             <thead>
               <tr>
@@ -119,18 +126,18 @@
             </thead>
             <tbody>
               <tr>
-                <td>#RA-1024</td>
-                <td>12 Sep 2026</td>
-                <td>2x Café de Origen Especial</td>
-                <td>$64.000 COP</td>
-                <td><span class="badge badge-success">Entregado</span></td>
+                <td data-label="# Pedido">#RA-1024</td>
+                <td data-label="Fecha">12 Sep 2026</td>
+                <td data-label="Productos">2x Café de Origen Especial</td>
+                <td data-label="Total">$64.000 COP</td>
+                <td data-label="Estado"><span class="badge badge-success">Entregado</span></td>
               </tr>
               <tr>
-                <td>#RA-1089</td>
-                <td>18 Sep 2026</td>
-                <td>1x Cacao Orgánico Zapatoca</td>
-                <td>$18.000 COP</td>
-                <td><span class="badge badge-warning">En camino</span></td>
+                <td data-label="# Pedido">#RA-1089</td>
+                <td data-label="Fecha">18 Sep 2026</td>
+                <td data-label="Productos">1x Cacao Orgánico Zapatoca</td>
+                <td data-label="Total">$18.000 COP</td>
+                <td data-label="Estado"><span class="badge badge-warning">En camino</span></td>
               </tr>
             </tbody>
           </table>
@@ -142,12 +149,12 @@
         <h2>Mis Favoritos</h2>
         <p>Productos que has guardado para comprar más adelante.</p>
 
-        <div class="grid-productos" style="margin-top: 1.5rem;">
+        <div class="grid-productos">
           <div class="card-producto">
             <h3>🍯 Miel de Abejas de Montaña</h3>
             <p class="origen"><strong>Origen:</strong> Zapatoca · 100% Pura</p>
             <p class="precio">$22.000 COP</p>
-            <a href="productos.html" class="btn-primary" style="display:inline-block; text-decoration:none; margin-top:0.5rem;">Ver en catálogo</a>
+            <a href="productos.html" class="btn-primary btn-block" style="text-decoration:none;">Ver en catálogo</a>
           </div>
         </div>
       </section>
@@ -157,7 +164,7 @@
         <h2>Seguridad de la Cuenta</h2>
         <p>Actualiza tu contraseña para mantener tu cuenta segura.</p>
 
-        <form id="form-cambiar-password" class="form-container" style="max-width: 100%; margin-top: 1.5rem;">
+        <form id="form-cambiar-password" class="form-container">
           <div class="form-group">
             <label for="pass-actual">Contraseña Actual</label>
             <input type="password" id="pass-actual" required placeholder="••••••••">
@@ -166,7 +173,7 @@
             <label for="pass-nueva">Nueva Contraseña</label>
             <input type="password" id="pass-nueva" required placeholder="••••••••">
           </div>
-          <button type="submit" class="btn-primary">Actualizar Contraseña</button>
+          <button type="submit" class="btn-primary btn-block">Actualizar Contraseña</button>
         </form>
       </section>
 

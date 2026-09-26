@@ -5,77 +5,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap');
 
 /* ==========================================
-   AJUSTE RESPONSIVO DEL PANEL PARA MÓVILES (< 840px)
-   ========================================== */
-@media (max-width: 840px) {
-
-  /* 1. Convertir la disposición de 2 columnas a 1 sola columna vertical */
-  .panel-layout {
-    grid-template-columns: 1fr !important;
-    gap: 1rem !important;
-    margin: 1rem auto !important;
-    padding: 0 0.8rem !important;
-  }
-
-  /* 2. Convertir el menú lateral en una barra horizontal deslizable */
-  .sidebar {
-    padding: 1rem !important;
-  }
-
-  .user-card-mini {
-    padding-bottom: 0.8rem !important;
-    margin-bottom: 0.8rem !important;
-  }
-
-  .sidebar-nav {
-    display: flex !important;
-    flex-direction: row !important; /* Coloca los botones lado a lado */
-    overflow-x: auto !important;    /* Permite deslizar horizontalmente si no caben */
-    gap: 0.5rem !important;
-    padding-bottom: 0.4rem;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .sidebar-nav .nav-item {
-    white-space: nowrap !important; /* Evita que el texto de los botones se divida en varias líneas */
-    font-size: 13px !important;
-    padding: 0.5rem 0.8rem !important;
-    flex-shrink: 0;                 /* Mantiene el tamaño adecuado de cada botón */
-  }
-
-  /* 3. Ajustes de la tarjeta de contenido principal */
-  .panel-content {
-    padding: 1.2rem !important;
-    box-sizing: border-box !important;
-  }
-
-  .panel-content h2 {
-    font-size: 1.4rem !important;
-  }
-
-  /* 4. Métricas de impacto en 1 columna en teléfonos */
-  .stats-grid {
-    grid-template-columns: 1fr !important;
-    gap: 0.8rem !important;
-  }
-
-  /* 5. Asegurar que las tablas no rompan el ancho del teléfono */
-  .table-responsive {
-    width: 100% !important;
-    overflow-x: auto !important;
-    display: block;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* 6. Ajuste de los formularios e inputs en pantalla pequeña */
-  .form-container,
-  .form-group input {
-    width: 100% !important;
-    box-sizing: border-box !important;
-  }
-}
-
-/* ==========================================
    1. VARIABLES DE MARCA (paleta oficial — no se modifica)
    ========================================== */
 :root {
@@ -1071,6 +1000,31 @@ footer {
     border-top: 1px solid rgba(244, 241, 230, 0.15);
   }
 
+  /* Variante del panel de usuario: sin botón de hamburguesa,
+     así que el menú siempre debe verse (no colapsa). */
+  .nav-links.nav-links-panel {
+    flex-basis: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.5rem 1.3rem;
+    max-height: none;
+    overflow: visible;
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid rgba(244, 241, 230, 0.15);
+  }
+
+  .nav-links.nav-links-panel li {
+    width: auto;
+  }
+
+  .nav-links.nav-links-panel a {
+    display: inline-block;
+    padding: 0.3rem 0;
+  }
+
   .nav-links li {
     width: 100%;
   }
@@ -1087,26 +1041,61 @@ footer {
 
   .panel-layout {
     grid-template-columns: 1fr;
+    margin: 1rem auto;
+    padding: 0 0.8rem;
+    gap: 1rem;
+  }
+
+  .sidebar {
+    padding: 1.2rem 0.9rem;
   }
 
   .sidebar-nav {
     flex-direction: row;
     overflow-x: auto;
-    padding-bottom: 0.3rem;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.4rem;
+    margin: 0 -0.9rem;
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+    scroll-snap-type: x proximity;
   }
 
   .sidebar-nav .nav-item {
-    white-space: nowrap;
-    font-size: 13px;
-    padding: 0.6rem 0.9rem;
+    width: auto;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.3rem;
+    min-width: 76px;
+    white-space: normal;
+    text-align: center;
+    font-size: 11.5px;
+    line-height: 1.2;
+    padding: 0.6rem 0.5rem;
     border-left: none;
     border-bottom: 3px solid transparent;
     border-radius: 8px 8px 0 0;
   }
 
+  .sidebar-nav .nav-item .icon {
+    font-size: 1.15rem;
+  }
+
   .sidebar-nav .nav-item.active {
     border-left-color: transparent;
     border-bottom-color: var(--oro-cordillera);
+  }
+
+  .panel-content {
+    padding: 1.5rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
   }
 
   main {
@@ -1157,5 +1146,54 @@ footer {
     flex-direction: column;
     text-align: center;
     justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .container-page {
+    padding: 1.3rem;
+  }
+
+  .panel-content {
+    padding: 1.1rem;
+  }
+
+  .sidebar {
+    padding: 1rem 0.7rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .user-card-mini .avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 1.4rem;
+  }
+
+  .hero-buttons,
+  .cta-banda {
+    width: 100%;
+  }
+
+  .hero-buttons a,
+  .cta-banda a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .table-custom th,
+  .table-custom td {
+    padding: 0.7rem 0.5rem;
+    font-size: 13px;
+  }
+
+  .navbar {
+    padding: 0.8rem 1rem;
+  }
+
+  .logo {
+    font-size: 1.2rem;
   }
 }
