@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Raíz Andina - Inicio</title>
+  <meta name="description" content="Raíz Andina conecta café, cacao y miel de comunidades de la cordillera colombiana con comercio justo y trazabilidad real.">
+  <title>Raíz Andina - Comercio justo de los Andes colombianos</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header>
     <nav class="navbar">
       <a href="index.html" class="logo">🌿 Raíz Andina</a>
-      <ul class="nav-links">
+      <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+        <span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
         <li><a href="index.html" class="active">Inicio</a></li>
         <li><a href="nosotros.html">Quiénes somos</a></li>
         <li><a href="productos.html">Productos</a></li>
@@ -20,13 +24,14 @@
     </nav>
   </header>
 
+  <div class="franja-andina" aria-hidden="true"></div>
+
   <main>
     <section class="container-page">
       <div class="hero-section">
-        <!-- Columna Izquierda: Texto, Botones y Cifras -->
         <div class="hero-content">
-          <h1>Comercio Justo y Origen Colombiano</h1>
-          <p>Conectamos la riqueza cultural de nuestras comunidades andinas con productos sostenibles y de alta calidad.</p>
+          <h1>Comercio justo y origen colombiano</h1>
+          <p>Conectamos la riqueza cultural de nuestras comunidades andinas con productos sostenibles y de alta calidad, directo de las montañas de Santander a tu mesa.</p>
           <div class="hero-buttons">
             <a href="productos.html" class="btn-primary">Ver productos</a>
             <a href="nosotros.html" class="btn-primary btn-secondary">Conocer la historia</a>
@@ -47,22 +52,71 @@
           </div>
         </div>
 
-        <!-- Columna Derecha: IMAGEN / GRÁFICO HERO -->
         <div class="hero-image">
-          <img src="./assets/img/cafe.jpeg" alt="Café de origen Raíz Andina">
+          <img src="./assets/img/cafe.jpeg" alt="Taza de café con forma del mapa del mundo, sobre granos de café tostado">
         </div>
+      </div>
+    </section>
+
+    <section class="container-page" style="margin-top: 1.5rem;">
+      <h2>Por qué elegir Raíz Andina</h2>
+      <p class="text-muted">Cada compra apoya directamente a las familias productoras de la cordillera oriental colombiana.</p>
+
+      <div class="valores-grid">
+        <div class="valor-card">
+          <div class="valor-icono">🤝</div>
+          <h3>Comercio justo</h3>
+          <p>Pagamos precios estables a los productores, sin intermediarios que reduzcan su ganancia.</p>
+        </div>
+        <div class="valor-card">
+          <div class="valor-icono">📍</div>
+          <h3>Trazabilidad real</h3>
+          <p>Sabes exactamente de qué finca, vereda y familia viene cada producto que compras.</p>
+        </div>
+        <div class="valor-card">
+          <div class="valor-icono">🌳</div>
+          <h3>Cultivo sostenible</h3>
+          <p>Prácticas agrícolas que protegen el bosque andino y su biodiversidad para las próximas generaciones.</p>
+        </div>
+      </div>
+
+      <div class="cta-banda">
+        <div>
+          <h3>Descubre el catálogo completo</h3>
+          <p>Café, cacao y miel de origen, listos para pedir.</p>
+        </div>
+        <a href="productos.html" class="btn-primary">Ver catálogo</a>
       </div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
-    <al class="nav-links">
-        <li><a href="index.html" class="active">Inicio</a></li>
-        <li><a href="nosotros.html">Quiénes somos</a></li>
-        <li><a href="productos.html">Productos</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
-      </al>
+    <div class="franja-andina" aria-hidden="true"></div>
+    <div class="footer-contenido">
+      <div class="footer-marca">
+        <a href="index.html" class="logo">🌿 Raíz Andina</a>
+        <p>Comercio justo de café, cacao y miel de la cordillera oriental colombiana.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explorar</h4>
+        <ul>
+          <li><a href="index.html" class="active">Inicio</a></li>
+          <li><a href="nosotros.html">Quiénes somos</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <p>hola@raizandina.co</p>
+        <p>Zapatoca, Santander, Colombia</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
+    </div>
   </footer>
+
+  <script src="js/nav.js"></script>
 </body>
 </html>

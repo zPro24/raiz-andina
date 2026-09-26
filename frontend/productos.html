@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Catálogo de café, cacao y miel de origen colombiano, cultivados por comunidades de la cordillera andina.">
   <title>Raíz Andina - Productos</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -10,7 +11,10 @@
   <header>
     <nav class="navbar">
       <a href="index.html" class="logo">🌿 Raíz Andina</a>
-      <ul class="nav-links">
+      <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+        <span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="nosotros.html">Quiénes somos</a></li>
         <li><a href="productos.html" class="active">Productos</a></li>
@@ -20,23 +24,30 @@
     </nav>
   </header>
 
+  <div class="franja-andina" aria-hidden="true"></div>
+
   <main>
     <section class="container-page">
-      <h2>Catálogo de Productos</h2>
+      <h2>Catálogo de productos</h2>
+      <p class="text-muted">Cada lote está asociado a una familia y una vereda específica de la cordillera oriental.</p>
+
       <div class="grid-productos">
         <div class="card-producto destacado">
-          <h3>Café de Origen Especial</h3>
-          <p>Origen: Santander · Cultivado a 1.700 msnm</p>
+          <span class="etiqueta">Más pedido</span>
+          <h3>☕ Café de Origen Especial</h3>
+          <p class="origen">Origen: Santander · Cultivado a 1.700 msnm</p>
           <div class="precio">$32.000 COP</div>
         </div>
         <div class="card-producto">
-          <h3>Cacao Orgánico</h3>
-          <p>Origen: Zapatoca</p>
+          <span class="etiqueta">Orgánico</span>
+          <h3>🍫 Cacao Orgánico</h3>
+          <p class="origen">Origen: Zapatoca</p>
           <div class="precio">$18.000 COP</div>
         </div>
         <div class="card-producto">
-          <h3>Miel Multifloral</h3>
-          <p>Origen: Cordillera Oriental</p>
+          <span class="etiqueta">100% Pura</span>
+          <h3>🍯 Miel Multifloral</h3>
+          <p class="origen">Origen: Cordillera Oriental</p>
           <div class="precio">$22.000 COP</div>
         </div>
       </div>
@@ -44,13 +55,32 @@
   </main>
 
   <footer>
-    <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
-    <al class="nav-links">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="nosotros.html">Quiénes somos</a></li>
-        <li><a href="productos.html"class="active">Productos</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
-      </al>
+    <div class="franja-andina" aria-hidden="true"></div>
+    <div class="footer-contenido">
+      <div class="footer-marca">
+        <a href="index.html" class="logo">🌿 Raíz Andina</a>
+        <p>Comercio justo de café, cacao y miel de la cordillera oriental colombiana.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explorar</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="nosotros.html">Quiénes somos</a></li>
+          <li><a href="productos.html" class="active">Productos</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <p>hola@raizandina.co</p>
+        <p>Zapatoca, Santander, Colombia</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
+    </div>
   </footer>
+
+  <script src="js/nav.js"></script>
 </body>
 </html>

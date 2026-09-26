@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inicia sesión o crea tu cuenta en Raíz Andina para gestionar tus pedidos.">
   <title>Raíz Andina - Iniciar sesión</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -10,7 +11,10 @@
   <header>
     <nav class="navbar">
       <a href="index.html" class="logo">🌿 Raíz Andina</a>
-      <ul class="nav-links">
+      <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+        <span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="nosotros.html">Quiénes somos</a></li>
         <li><a href="productos.html">Productos</a></li>
@@ -19,6 +23,8 @@
       </ul>
     </nav>
   </header>
+
+  <div class="franja-andina" aria-hidden="true"></div>
 
   <main>
     <section class="container-page login-grid">
@@ -85,15 +91,33 @@
   </main>
 
   <footer>
-    <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
-    <al class="nav-links">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="nosotros.html">Quiénes somos</a></li>
-        <li><a href="productos.html">Productos</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
-      </al>
+    <div class="franja-andina" aria-hidden="true"></div>
+    <div class="footer-contenido">
+      <div class="footer-marca">
+        <a href="index.html" class="logo">🌿 Raíz Andina</a>
+        <p>Comercio justo de café, cacao y miel de la cordillera oriental colombiana.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explorar</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="nosotros.html">Quiénes somos</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <p>hola@raizandina.co</p>
+        <p>Zapatoca, Santander, Colombia</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
+    </div>
   </footer>
 
+  <script src="js/nav.js"></script>
   <script src="js/auth.js"></script>
 </body>
 </html>

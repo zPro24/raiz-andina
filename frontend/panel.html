@@ -14,15 +14,16 @@
       <ul class="nav-links">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="productos.html">Productos</a></li>
-        <li><button id="btn-logout" class="btn-primary" style="background-color: #a93226; border: none; cursor: pointer;">Cerrar sesión</button></li>
+        <li><button id="btn-logout" class="btn-primary btn-logout" type="button">Cerrar sesión</button></li>
       </ul>
     </nav>
   </header>
 
+  <div class="franja-andina" aria-hidden="true"></div>
+
   <!-- Layout del Panel con Sidebar -->
   <div class="panel-layout">
-    
-    <!-- Sidebar / Menú Lateral -->
+
     <!-- Sidebar / Menú Lateral -->
     <aside class="sidebar">
       <div class="user-card-mini">
@@ -33,7 +34,7 @@
 
       <nav class="sidebar-nav">
         <button type="button" class="nav-item active" data-tab="tab-resumen">
-          <span class="icon">📊</span> Resumen & Impacto
+          <span class="icon">📊</span> Resumen &amp; Impacto
         </button>
         <button type="button" class="nav-item" data-tab="tab-perfil">
           <span class="icon">👤</span> Mi Perfil
@@ -52,7 +53,7 @@
 
     <!-- Contenido Principal Cambiante -->
     <main class="panel-content">
-      
+
       <!-- Pestaña 1: Resumen & Impacto -->
       <section id="tab-resumen" class="tab-content active">
         <h2 id="bienvenida-usuario">Bienvenido/a</h2>
@@ -82,7 +83,7 @@
       <section id="tab-perfil" class="tab-content">
         <h2>Mi Perfil</h2>
         <p>Gestiona tus datos personales y dirección de envío.</p>
-        
+
         <form id="form-perfil" class="form-container" style="max-width: 100%; margin-top: 1.5rem;">
           <div class="form-group">
             <label for="perfil-nombre">Nombre Completo</label>
@@ -104,7 +105,7 @@
       <section id="tab-pedidos" class="tab-content">
         <h2>Mis Pedidos</h2>
         <p>Historial de compras registradas en tu cuenta.</p>
-        
+
         <div class="table-responsive" style="margin-top: 1.5rem;">
           <table class="table-custom">
             <thead>
@@ -143,8 +144,8 @@
 
         <div class="grid-productos" style="margin-top: 1.5rem;">
           <div class="card-producto">
-            <h3>Miel de Abejas de Montaña</h3>
-            <p><strong>Origen:</strong> Zapatoca · 100% Pura</p>
+            <h3>🍯 Miel de Abejas de Montaña</h3>
+            <p class="origen"><strong>Origen:</strong> Zapatoca · 100% Pura</p>
             <p class="precio">$22.000 COP</p>
             <a href="productos.html" class="btn-primary" style="display:inline-block; text-decoration:none; margin-top:0.5rem;">Ver en catálogo</a>
           </div>
@@ -173,7 +174,9 @@
   </div>
 
   <footer>
-    <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
+    </div>
   </footer>
 
   <script src="js/panel.js"></script>

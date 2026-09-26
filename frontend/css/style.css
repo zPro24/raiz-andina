@@ -1,263 +1,11 @@
-/* Importación de las tipografías oficiales de Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&display=swap');
-
 /* ==========================================
-   ESTILOS PARA EL PANEL CON SIDEBAR
+   RAÍZ ANDINA — Hoja de estilos
+   Tipografías oficiales de Google Fonts
    ========================================== */
-.panel-layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  min-height: calc(100vh - 160px);
-  max-width: 1200px;
-  margin: 1.5rem auto;
-  gap: 1.5rem;
-  padding: 0 1rem;
-}
-
-/* Sidebar */
-.sidebar {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 1.5rem 1rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  height: fit-content;
-}
-
-.user-card-mini {
-  text-align: center;
-  padding-bottom: 1.2rem;
-  margin-bottom: 1.2rem;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.user-card-mini .avatar {
-  font-size: 2.5rem;
-  margin-bottom: 0.3rem;
-}
-
-.user-card-mini h4 {
-  margin: 0;
-  color: var(--verde-andino, #1b3b2b);
-}
-
-.user-card-mini p {
-  font-size: 13px;
-  color: #666;
-  margin: 0.2rem 0 0 0;
-}
-
-.sidebar-nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.sidebar-nav .nav-item {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  width: 100%;
-  padding: 0.8rem 1rem;
-  background: none;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  color: #333;
-  cursor: pointer;
-  text-align: left;
-  transition: background 0.2s, color 0.2s;
-}
-
-.sidebar-nav .nav-item:hover,
-.sidebar-nav .nav-item.active {
-  background-color: var(--verde-andino, #1b3b2b);
-  color: #ffffff;
-}
-
-/* Panel Content y Tabs */
-.panel-content {
-  background-color: #ffffff;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-/* Tarjetas de Estadísticas */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-}
-
-.stat-card {
-  background-color: #f9f9f6;
-  border: 1px solid #e2e2d8;
-  border-radius: 10px;
-  padding: 1.2rem;
-  text-align: center;
-}
-
-.stat-card h3 {
-  font-size: 1rem;
-  color: var(--verde-andino, #1b3b2b);
-  margin-bottom: 0.5rem;
-}
-
-.stat-value {
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: var(--oro-cordillera, #c29b38);
-  margin: 0.3rem 0;
-}
-
-.stat-desc {
-  font-size: 0.85rem;
-  color: #666;
-  margin: 0;
-}
-
-/* Tablas Responsivas */
-.table-responsive {
-  overflow-x: auto;
-}
-
-.table-custom {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-  font-size: 14px;
-}
-
-.table-custom th,
-.table-custom td {
-  padding: 0.8rem;
-  border-bottom: 1px solid #eee;
-}
-
-.table-custom th {
-  background-color: #f5f5f0;
-  color: var(--verde-andino, #1b3b2b);
-}
-
-.badge {
-  padding: 0.3rem 0.6rem;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.badge-success {
-  background-color: #d4edda;
-  color: #155724;
-}
-
-.badge-warning {
-  background-color: #fff3cd;
-  color: #856404;
-}
-
-/* Responsivo para Celulares */
-@media (max-width: 840px) {
-  .panel-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar-nav {
-    flex-direction: row;
-    overflow-x: auto;
-    padding-bottom: 0.5rem;
-  }
-
-  .sidebar-nav .nav-item {
-    white-space: nowrap;
-    font-size: 13px;
-    padding: 0.6rem 0.8rem;
-  }
-}
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap');
 
 /* ==========================================
-   CORRECCIÓN PARA PRODUCTOS EN MÓVILES
-   ========================================== */
-@media (max-width: 840px) {
-
-  /* 1. Forzar contenedor general a no desbordar */
-  .container-page {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    overflow: hidden; /* Evita cualquier desborde lateral */
-  }
-
-  /* 2. Rejilla de productos en 1 sola columna */
-  .grid-productos {
-    display: grid !important;
-    grid-template-columns: 1fr !important; /* Coloca 1 sola tarjeta por fila */
-    width: 100% !important;
-    gap: 1.2rem !important;
-    box-sizing: border-box;
-  }
-
-  /* 3. Tarjeta destacada y tarjetas normales al 100% de ancho */
-  .card-producto,
-  .card-producto.destacado {
-    grid-column: span 1 !important; /* Quita el espacio doble a la destacada */
-    width: 100% !important;
-    box-sizing: border-box;
-  }
-}
-
-/* ==========================================
-   AJUSTE RESPONSIVO PARA MÓVILES (< 840px)
-   ========================================== */
-@media (max-width: 840px) {
-
-  /* 1. Corrección del Header y Navbar */
-  header {
-    height: auto !important; /* Quita la restricción de 76px para que envuelva todo el menú */
-    min-height: 76px;
-    padding: 0.8rem 0;
-  }
-
-  .navbar {
-    flex-direction: column; /* Alinea el Logo, los Enlaces y el Botón uno debajo del otro */
-    gap: 0.8rem;
-    padding: 0 1rem;
-  }
-
-  .nav-links {
-    flex-wrap: wrap; /* Permite que los enlaces pasen a otra línea si no caben */
-    justify-content: center;
-    gap: 0.6rem 1rem;
-    width: 100%;
-  }
-
-  .nav-links a {
-    color: var(--papel) !important; /* Mantiene el texto visible en blanco/beige sobre fondo verde */
-    font-size: 14px;
-  }
-
-  .btn-login-nav {
-    display: inline-block;
-    margin-top: 0.2rem;
-  }
-
-  /* 2. Ajuste de margen superior del contenido */
-  main {
-    margin-top: 1.5rem;
-    padding: 0 1rem;
-  }
-}
-
-/* ==========================================
-   1. VARIABLES CSS OFICIALES (Mockup)
+   1. VARIABLES DE MARCA (paleta oficial — no se modifica)
    ========================================== */
 :root {
   --verde-andino: #1F3D33;
@@ -270,6 +18,14 @@
 
   --font-serif: 'Fraunces', serif;
   --font-sans: 'Work Sans', sans-serif;
+
+  /* Derivados de la paleta oficial, no colores nuevos */
+  --sombra-tinta: rgba(38, 37, 32, 0.12);
+  --sombra-tinta-suave: rgba(38, 37, 32, 0.06);
+  --sombra-verde: rgba(31, 61, 51, 0.18);
+  --radio-s: 6px;
+  --radio-m: 10px;
+  --radio-l: 18px;
 }
 
 * {
@@ -278,15 +34,38 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--papel);
   color: var(--tinta);
   font-family: var(--font-sans);
   font-size: 17px;
-  line-height: 1.65;
+  line-height: 1.7;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+:focus-visible {
+  outline: 3px solid var(--oro-cordillera);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }
 
 /* ==========================================
@@ -296,62 +75,138 @@ h1, h2, h3 {
   font-family: var(--font-serif);
   color: var(--verde-andino);
   line-height: 1.15;
+  font-weight: 600;
 }
 
 h1 {
-  font-size: 2.8rem;
-  font-weight: 500;
-  margin-bottom: 1rem;
+  font-size: 3rem;
+  font-weight: 600;
+  margin-bottom: 1.1rem;
+  max-width: 16ch;
 }
 
 h2 {
   font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  border-bottom: 2px solid var(--niebla);
-  padding-bottom: 0.5rem;
+  margin-bottom: 1.2rem;
+  padding-bottom: 0.7rem;
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 64px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--oro-cordillera), var(--oro-suave));
+}
+
+h2.centrado::after {
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.2rem;
   margin-bottom: 0.5rem;
 }
 
+p {
+  max-width: 68ch;
+}
+
+.text-muted {
+  color: #6b6a60;
+}
+
 /* ==========================================
-   3. BARRA DE NAVEGACIÓN (Sticky 76px)
+   3. MOTIVO ANDINO — greca escalonada decorativa
+   Franja textil inspirada en las grecas andinas,
+   usada como separador entre secciones clave.
+   ========================================== */
+.franja-andina {
+  height: 10px;
+  width: 100%;
+  background-image:
+    linear-gradient(135deg, var(--oro-cordillera) 25%, transparent 25%),
+    linear-gradient(225deg, var(--oro-cordillera) 25%, transparent 25%),
+    linear-gradient(45deg, var(--oro-cordillera) 25%, transparent 25%),
+    linear-gradient(315deg, var(--oro-cordillera) 25%, transparent 25%);
+  background-position: 10px 0, 10px 0, 0 0, 0 0;
+  background-size: 20px 20px;
+  background-repeat: repeat-x;
+  background-color: var(--verde-andino);
+  flex-shrink: 0;
+}
+
+/* ==========================================
+   4. BARRA DE NAVEGACIÓN
    ========================================== */
 header {
   background-color: var(--verde-andino);
-  height: 76px;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 14px var(--sombra-verde);
 }
 
 .navbar {
   max-width: 1200px;
-  height: 100%;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 60px;
 }
 
 .logo {
   font-family: var(--font-serif);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: var(--oro-suave);
   text-decoration: none;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
 }
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 2px solid var(--oro-suave);
+  border-radius: var(--radio-s);
+  width: 42px;
+  height: 38px;
+  cursor: pointer;
+  position: relative;
+}
+
+.nav-toggle span,
+.nav-toggle span::before,
+.nav-toggle span::after {
+  content: "";
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  height: 2px;
+  background-color: var(--oro-suave);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-toggle span { top: 18px; }
+.nav-toggle span::before { top: -7px; }
+.nav-toggle span::after { top: 7px; }
+
+.nav-toggle[aria-expanded="true"] span { background: transparent; }
+.nav-toggle[aria-expanded="true"] span::before { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span::after { transform: translateY(-7px) rotate(-45deg); }
 
 .nav-links {
   display: flex;
   list-style: none;
-  gap: 1.5rem;
+  gap: 1.7rem;
   align-items: center;
 }
 
@@ -361,6 +216,8 @@ header {
   font-weight: 500;
   font-size: 15px;
   transition: color 0.2s ease;
+  padding: 0.3rem 0;
+  border-bottom: 2px solid transparent;
 }
 
 .nav-links a:hover,
@@ -368,67 +225,198 @@ header {
   color: var(--oro-cordillera);
 }
 
+.nav-links a.active {
+  border-bottom-color: var(--oro-cordillera);
+}
+
 .btn-login-nav {
   background-color: var(--oro-cordillera);
   color: var(--tinta) !important;
   font-weight: 600 !important;
-  padding: 0.5rem 1.2rem;
-  border-radius: 4px;
-  transition: background-color 0.2s ease !important;
+  padding: 0.55rem 1.3rem;
+  border-radius: var(--radio-s);
+  transition: background-color 0.2s ease, transform 0.15s ease !important;
+  border-bottom: none !important;
 }
 
 .btn-login-nav:hover {
   background-color: var(--oro-suave) !important;
+  transform: translateY(-1px);
 }
 
 /* ==========================================
-   4. CONTENIDO PRINCIPAL Y SECCIONES
+   5. CONTENIDO PRINCIPAL Y SECCIONES
    ========================================== */
 main {
   flex: 1;
   max-width: 1100px;
   width: 100%;
-  margin: 2rem auto;
+  margin: 2.5rem auto;
   padding: 0 1.5rem;
 }
 
 .container-page {
   background-color: #ffffff;
-  padding: 2.5rem;
-  border-radius: 8px;
+  padding: 2.8rem;
+  border-radius: var(--radio-m);
   border: 1px solid var(--niebla);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+  box-shadow: 0 10px 30px var(--sombra-tinta-suave);
 }
 
-/* Hero y Cifras */
+section + section.container-page,
+.container-page + .container-page {
+  margin-top: 1.5rem;
+}
+
+/* ==========================================
+   6. HERO
+   ========================================== */
 .hero-section {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3rem;
   align-items: center;
-  padding: 2rem 0;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+}
+
+.hero-content > p {
+  font-size: 1.1rem;
+  color: #4a493f;
+}
+
+.hero-buttons {
+  margin-top: 1.6rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .cifras-grid {
   display: flex;
-  gap: 2rem;
-  margin-top: 1.5rem;
-  padding-top: 1.5rem;
+  gap: 2.2rem;
+  margin-top: 2rem;
+  padding-top: 1.6rem;
   border-top: 1px solid var(--niebla);
 }
 
 .cifra-item {
-  text-align: center;
+  text-align: left;
 }
 
 .cifra-numero {
   font-family: var(--font-serif);
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 2.2rem;
+  font-weight: 700;
   color: var(--oro-cordillera);
+  line-height: 1;
 }
 
-/* Retícula de Productos (Asimétrica) */
+.cifra-item div:last-child {
+  margin-top: 0.3rem;
+  font-size: 14px;
+  color: #6b6a60;
+}
+
+.hero-image {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.hero-image::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 2px solid var(--oro-suave);
+  border-radius: var(--radio-l);
+  z-index: 0;
+}
+
+.hero-image img {
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radio-l);
+  border: 1px solid var(--niebla);
+  box-shadow: 0 18px 40px var(--sombra-verde);
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================
+   7. SECCIÓN DE VALORES (Página de inicio)
+   ========================================== */
+.valores-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.valor-card {
+  padding: 1.6rem;
+  border-radius: var(--radio-m);
+  background-color: var(--papel);
+  border: 1px solid var(--niebla);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.valor-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 26px var(--sombra-tinta-suave);
+}
+
+.valor-icono {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: var(--verde-andino);
+  color: var(--oro-suave);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  margin-bottom: 0.9rem;
+}
+
+.valor-card p {
+  font-size: 15px;
+  color: #4a493f;
+}
+
+.cta-banda {
+  margin-top: 1rem;
+  background-color: var(--verde-andino);
+  color: var(--papel);
+  border-radius: var(--radio-m);
+  padding: 2.2rem 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.cta-banda h3 {
+  color: var(--oro-suave);
+  margin-bottom: 0.3rem;
+}
+
+.cta-banda p {
+  color: var(--niebla);
+  margin: 0;
+}
+
+/* ==========================================
+   8. RETÍCULA DE PRODUCTOS
+   ========================================== */
 .grid-productos {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -439,27 +427,72 @@ main {
 .card-producto {
   background-color: var(--papel);
   border: 1px solid var(--niebla);
-  border-radius: 6px;
-  padding: 1.5rem;
+  border-radius: var(--radio-m);
+  padding: 1.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-producto:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px var(--sombra-tinta-suave);
+}
+
+.card-producto .origen {
+  font-size: 13px;
+  color: #6b6a60;
+  text-transform: none;
 }
 
 .card-producto.destacado {
   grid-column: span 2;
   background-color: var(--verde-andino);
+  background-image: linear-gradient(160deg, var(--verde-andino) 60%, var(--musgo) 100%);
   color: var(--papel);
+  border-color: var(--verde-andino);
 }
 
 .card-producto.destacado h3 {
   color: var(--oro-suave);
 }
 
-.card-producto .precio {
-  font-weight: 600;
-  color: var(--oro-cordillera);
-  margin-top: 0.5rem;
+.card-producto.destacado .origen {
+  color: var(--niebla);
 }
 
-/* Botones */
+.card-producto .etiqueta {
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--verde-andino);
+  background-color: var(--oro-suave);
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  margin-bottom: 0.3rem;
+}
+
+.card-producto.destacado .etiqueta {
+  background-color: var(--oro-cordillera);
+  color: var(--tinta);
+}
+
+.card-producto .precio {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--oro-cordillera);
+  margin-top: 0.4rem;
+}
+
+.card-producto.destacado .precio {
+  color: var(--oro-suave);
+}
+
+/* ==========================================
+   9. BOTONES
+   ========================================== */
 .btn-primary {
   background-color: var(--verde-andino);
   color: var(--papel);
@@ -467,21 +500,43 @@ main {
   font-family: var(--font-sans);
   font-weight: 600;
   font-size: 15px;
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  padding: 0.8rem 1.6rem;
+  border-radius: var(--radio-s);
   cursor: pointer;
   text-decoration: none;
   display: inline-block;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  box-shadow: 0 6px 16px var(--sombra-verde);
 }
 
 .btn-primary:hover {
   background-color: var(--musgo);
+  transform: translateY(-2px);
 }
 
-/* Formulario Login y Contacto */
+.btn-secondary {
+  background-color: transparent !important;
+  color: var(--verde-andino) !important;
+  border: 2px solid var(--verde-andino) !important;
+  box-shadow: none !important;
+  padding: calc(0.8rem - 2px) calc(1.6rem - 2px);
+}
+
+.btn-secondary:hover {
+  background-color: var(--verde-andino) !important;
+  color: var(--papel) !important;
+}
+
+.btn-block {
+  width: 100%;
+  text-align: center;
+}
+
+/* ==========================================
+   10. FORMULARIOS
+   ========================================== */
 .form-container {
-  max-width: 420px;
+  max-width: 480px;
   margin: 1.5rem auto 0 auto;
   display: flex;
   flex-direction: column;
@@ -497,117 +552,124 @@ main {
 .form-group label {
   font-weight: 600;
   font-size: 14px;
+  color: var(--verde-andino);
 }
 
-.form-group input, 
+.form-group input,
 .form-group textarea {
-  padding: 0.75rem;
+  padding: 0.8rem 0.9rem;
   border: 1px solid var(--niebla);
-  border-radius: 4px;
+  border-radius: var(--radio-s);
   resize: vertical;
   font-family: var(--font-sans);
   font-size: 15px;
   background-color: var(--papel);
+  color: var(--tinta);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.form-group input:focus, 
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #9a9787;
+}
+
+.form-group input:focus,
 .form-group textarea:focus {
-  outline: 2px solid var(--oro-cordillera);
-}
-
-/* Footer */
-footer {
-  background-color: var(--verde-andino);
-  color: var(--papel);
-  text-align: center;
-  padding: 2rem;
-  margin-top: auto;
-  font-size: 14px;
-}
-
-al {
-  text-align: center;
-  justify-content: center;
-}
-
-/* Estilos para la sección Hero con Imagen */
-.hero-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  align-items: center;
-}
-
-.hero-buttons {
-  margin-top: 1.5rem;
-  display: flex;
-  gap: 1rem;
-}
-
-.btn-secondary {
-  background-color: var(--musgo) !important;
-}
-
-.btn-secondary:hover {
-  background-color: var(--verde-andino) !important;
-}
-
-.hero-image {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hero-image img {
-  width: 100%;
-  max-width: 450px;
-  height: auto;
-  border-radius: 8px;
-  object-fit: cover;
-  border: 1px solid var(--niebla);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-}
-
-/* Layout del Login con Panel Lateral */
-.login-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  padding: 0 !important;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.panel-bienvenida {
-  background-color: var(--verde-andino);
-  color: var(--papel);
-  padding: 3rem 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.panel-bienvenida h2 {
-  color: var(--oro-suave);
-  border-bottom: 2px solid var(--musgo);
-  margin-bottom: 1rem;
-}
-
-.form-acceso {
-  padding: 3rem 2.5rem;
-  background-color: #ffffff;
+  outline: none;
+  border-color: var(--oro-cordillera);
+  box-shadow: 0 0 0 3px rgba(201, 150, 47, 0.2);
 }
 
 .form-checkbox {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin: 0.5rem 0 1rem 0;
+  margin: 0.2rem 0 0.4rem 0;
   font-size: 14px;
 }
 
-.btn-block {
-  width: 100%;
+/* Página de contacto: layout con panel informativo */
+.contacto-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.contacto-info {
+  background-color: var(--papel);
+  border: 1px solid var(--niebla);
+  border-radius: var(--radio-m);
+  padding: 1.8rem;
+}
+
+.contacto-info .item {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  margin-bottom: 1.2rem;
+}
+
+.contacto-info .item:last-child {
+  margin-bottom: 0;
+}
+
+.contacto-info .icono {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.contacto-info h4 {
+  font-family: var(--font-serif);
+  color: var(--verde-andino);
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.contacto-info p {
+  font-size: 14px;
+  color: #4a493f;
+  margin: 0;
+}
+
+/* ==========================================
+   11. LOGIN — Panel dividido
+   ========================================== */
+.login-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: var(--radio-m);
+}
+
+.panel-bienvenida {
+  background-color: var(--verde-andino);
+  background-image: linear-gradient(165deg, var(--verde-andino) 55%, var(--musgo) 100%);
+  color: var(--papel);
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.panel-bienvenida h2 {
+  color: var(--oro-suave);
+  margin-bottom: 1rem;
+}
+
+.panel-bienvenida h2::after {
+  background: linear-gradient(90deg, var(--oro-cordillera), transparent);
+}
+
+.panel-bienvenida p {
+  color: var(--niebla);
+}
+
+.form-acceso {
+  padding: 3rem 2.8rem;
+  background-color: #ffffff;
 }
 
 .login-footer-links {
@@ -626,9 +688,403 @@ al {
   text-decoration: underline;
 }
 
-/* Responsivo para celulares */
+/* ==========================================
+   12. FOOTER
+   ========================================== */
+footer {
+  background-color: var(--verde-andino);
+  color: var(--papel);
+  margin-top: auto;
+}
+
+.footer-contenido {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.6rem 1.5rem 1.6rem;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr;
+  gap: 2rem;
+}
+
+.footer-marca .logo {
+  display: inline-block;
+  margin-bottom: 0.6rem;
+}
+
+.footer-marca p {
+  font-size: 14px;
+  color: var(--niebla);
+  max-width: 32ch;
+}
+
+.footer-col h4 {
+  font-family: var(--font-serif);
+  color: var(--oro-suave);
+  font-size: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.footer-col a {
+  color: var(--papel);
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.footer-col a:hover,
+.footer-col a.active {
+  color: var(--oro-cordillera);
+}
+
+.footer-col p {
+  font-size: 14px;
+  color: var(--niebla);
+  margin: 0 0 0.5rem 0;
+}
+
+.footer-bottom {
+  text-align: center;
+  font-size: 13px;
+  color: var(--niebla);
+  padding: 1.1rem 1.5rem;
+  border-top: 1px solid rgba(244, 241, 230, 0.12);
+}
+
+/* ==========================================
+   13. PANEL DE USUARIO CON SIDEBAR
+   ========================================== */
+.panel-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: calc(100vh - 160px);
+  max-width: 1200px;
+  margin: 1.5rem auto;
+  gap: 1.5rem;
+  padding: 0 1rem;
+}
+
+.sidebar {
+  background-color: #ffffff;
+  border-radius: var(--radio-m);
+  padding: 1.6rem 1.1rem;
+  box-shadow: 0 6px 20px var(--sombra-tinta-suave);
+  height: fit-content;
+  border: 1px solid var(--niebla);
+}
+
+.user-card-mini {
+  text-align: center;
+  padding-bottom: 1.2rem;
+  margin-bottom: 1.2rem;
+  border-bottom: 1px solid var(--niebla);
+}
+
+.user-card-mini .avatar {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 0.5rem;
+  border-radius: 50%;
+  background-color: var(--verde-andino);
+  color: var(--oro-suave);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.user-card-mini h4 {
+  margin: 0;
+  color: var(--verde-andino);
+  font-family: var(--font-serif);
+}
+
+.user-card-mini p {
+  font-size: 13px;
+  color: #6b6a60;
+  margin: 0.2rem 0 0 0;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.sidebar-nav .nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  border-left: 3px solid transparent;
+  border-radius: 0 8px 8px 0;
+  font-size: 15px;
+  font-family: var(--font-sans);
+  color: var(--tinta);
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.sidebar-nav .nav-item:hover {
+  background-color: var(--papel);
+}
+
+.sidebar-nav .nav-item.active {
+  background-color: var(--papel);
+  color: var(--verde-andino);
+  border-left-color: var(--oro-cordillera);
+  font-weight: 600;
+}
+
+.panel-content {
+  background-color: #ffffff;
+  border-radius: var(--radio-m);
+  padding: 2.2rem;
+  box-shadow: 0 6px 20px var(--sombra-tinta-suave);
+  border: 1px solid var(--niebla);
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.1rem;
+}
+
+.stat-card {
+  background-color: var(--papel);
+  border: 1px solid var(--niebla);
+  border-radius: var(--radio-m);
+  padding: 1.3rem;
+  text-align: center;
+}
+
+.stat-card h3 {
+  font-size: 1rem;
+  color: var(--verde-andino);
+  margin-bottom: 0.6rem;
+}
+
+.stat-value {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--oro-cordillera);
+  margin: 0.3rem 0;
+}
+
+.stat-desc {
+  font-size: 0.85rem;
+  color: #6b6a60;
+  margin: 0;
+}
+
+.table-responsive {
+  overflow-x: auto;
+}
+
+.table-custom {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+}
+
+.table-custom th,
+.table-custom td {
+  padding: 0.9rem 0.8rem;
+  border-bottom: 1px solid var(--niebla);
+}
+
+.table-custom th {
+  background-color: var(--papel);
+  color: var(--verde-andino);
+  font-family: var(--font-serif);
+  font-weight: 600;
+}
+
+.badge {
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.badge-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.badge-warning {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.btn-logout {
+  background-color: transparent;
+  color: var(--papel);
+  border: 1px solid var(--oro-suave);
+  box-shadow: none;
+}
+
+.btn-logout:hover {
+  background-color: rgba(201, 150, 47, 0.15);
+}
+
+/* ==========================================
+   14. RESPONSIVO
+   ========================================== */
+@media (max-width: 900px) {
+  .hero-section {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-image {
+    order: -1;
+  }
+
+  .valores-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-contenido {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 840px) {
+  header {
+    padding: 0;
+  }
+
+  .navbar {
+    flex-wrap: wrap;
+    padding: 0.9rem 1.2rem;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    flex-basis: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.2rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+
+  .nav-links.abierto {
+    max-height: 400px;
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(244, 241, 230, 0.15);
+  }
+
+  .nav-links li {
+    width: 100%;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0.65rem 0.2rem;
+  }
+
+  .btn-login-nav {
+    display: inline-block;
+    text-align: center;
+  }
+
+  .panel-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar-nav {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 0.3rem;
+  }
+
+  .sidebar-nav .nav-item {
+    white-space: nowrap;
+    font-size: 13px;
+    padding: 0.6rem 0.9rem;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .sidebar-nav .nav-item.active {
+    border-left-color: transparent;
+    border-bottom-color: var(--oro-cordillera);
+  }
+
+  main {
+    margin-top: 1.5rem;
+    padding: 0 1rem;
+  }
+
+  .container-page {
+    padding: 1.8rem;
+  }
+}
+
 @media (max-width: 768px) {
+  h1 { font-size: 2.2rem; }
+  h2 { font-size: 1.6rem; }
+
   .login-grid {
     grid-template-columns: 1fr;
+  }
+
+  .contacto-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cifras-grid {
+    flex-wrap: wrap;
+    gap: 1.4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .grid-productos,
+  .valores-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .card-producto,
+  .card-producto.destacado {
+    grid-column: span 1 !important;
+  }
+
+  .footer-contenido {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+
+  .cta-banda {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
   }
 }

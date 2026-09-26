@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Escríbenos para conocer más sobre los productos y la red de comercio justo de Raíz Andina.">
   <title>Raíz Andina - Contacto</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -10,7 +11,10 @@
   <header>
     <nav class="navbar">
       <a href="index.html" class="logo">🌿 Raíz Andina</a>
-      <ul class="nav-links">
+      <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+        <span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="nosotros.html">Quiénes somos</a></li>
         <li><a href="productos.html">Productos</a></li>
@@ -20,35 +24,91 @@
     </nav>
   </header>
 
+  <div class="franja-andina" aria-hidden="true"></div>
+
   <main>
     <section class="container-page">
       <h2>Contacto</h2>
-      <form class="form-container">
-        <div class="form-group">
-          <label>Nombre completo</label>
-          <input type="text" required placeholder="Tu nombre">
+      <p class="text-muted">¿Tienes dudas sobre un pedido o quieres saber más de nuestras comunidades productoras? Escríbenos.</p>
+
+      <div class="contacto-grid" style="margin-top: 1.8rem;">
+        <form class="form-container" style="margin: 0;">
+          <div class="form-group">
+            <label for="contacto-nombre">Nombre completo</label>
+            <input type="text" id="contacto-nombre" required placeholder="Tu nombre">
+          </div>
+          <div class="form-group">
+            <label for="contacto-correo">Correo electrónico</label>
+            <input type="email" id="contacto-correo" required placeholder="correo@ejemplo.com">
+          </div>
+          <div class="form-group">
+            <label for="contacto-mensaje">Mensaje</label>
+            <textarea id="contacto-mensaje" rows="4" required placeholder="Escribe tu mensaje..."></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Enviar mensaje</button>
+        </form>
+
+        <div class="contacto-info">
+          <div class="item">
+            <span class="icono">📍</span>
+            <div>
+              <h4>Ubicación</h4>
+              <p>Zapatoca, Santander, Colombia</p>
+            </div>
+          </div>
+          <div class="item">
+            <span class="icono">✉️</span>
+            <div>
+              <h4>Correo</h4>
+              <p>hola@raizandina.co</p>
+            </div>
+          </div>
+          <div class="item">
+            <span class="icono">📱</span>
+            <div>
+              <h4>WhatsApp</h4>
+              <p>+57 300 123 4567</p>
+            </div>
+          </div>
+          <div class="item">
+            <span class="icono">🕒</span>
+            <div>
+              <h4>Horario de atención</h4>
+              <p>Lunes a viernes, 8:00 a.m. – 5:00 p.m.</p>
+            </div>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Correo electrónico</label>
-          <input type="email" required placeholder="correo@ejemplo.com">
-        </div>
-        <div class="form-group">
-          <label>Mensaje</label>
-          <textarea rows="4" required placeholder="Escribe tu mensaje..."></textarea>
-        </div>
-        <button type="submit" class="btn-primary">Enviar mensaje</button>
-      </form>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
-    <al class="nav-links">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="nosotros.html">Quiénes somos</a></li>
-        <li><a href="productos.html">Productos</a></li>
-        <li><a href="contacto.html" class="active">Contacto</a></li>
-      </al>
+    <div class="franja-andina" aria-hidden="true"></div>
+    <div class="footer-contenido">
+      <div class="footer-marca">
+        <a href="index.html" class="logo">🌿 Raíz Andina</a>
+        <p>Comercio justo de café, cacao y miel de la cordillera oriental colombiana.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explorar</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="nosotros.html">Quiénes somos</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="contacto.html" class="active">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <p>hola@raizandina.co</p>
+        <p>Zapatoca, Santander, Colombia</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
+    </div>
   </footer>
+
+  <script src="js/nav.js"></script>
 </body>
 </html>

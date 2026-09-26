@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Conoce la misión y visión de Raíz Andina, comercio justo para las comunidades de la cordillera colombiana.">
   <title>Raíz Andina - Quiénes somos</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -10,7 +11,10 @@
   <header>
     <nav class="navbar">
       <a href="index.html" class="logo">🌿 Raíz Andina</a>
-      <ul class="nav-links">
+      <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
+        <span></span>
+      </button>
+      <ul class="nav-links" id="nav-links">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="nosotros.html" class="active">Quiénes somos</a></li>
         <li><a href="productos.html">Productos</a></li>
@@ -20,29 +24,60 @@
     </nav>
   </header>
 
+  <div class="franja-andina" aria-hidden="true"></div>
+
   <main>
     <section class="container-page">
       <h2>Quiénes somos</h2>
       <p>Raíz Andina es una marca de comercio justo orientada a revalorizar los productos agrícolas y artesanales de la cordillera andina colombiana.</p>
-      
-      <br>
-      <h2>Misión</h2>
-      <p>Promover y salvaguardar la identidad y los saberes ancestrales mediante redes de comercio transparente y sostenible.</p>
-      
-      <br>
-      <h2>Visión</h2>
-      <p>Ser una plataforma referente regional e internacional en la integración de tecnología, sostenibilidad y cultura andina para el año 2030.</p>
+
+      <div class="valores-grid" style="margin-top: 2rem;">
+        <div class="valor-card">
+          <div class="valor-icono">🎯</div>
+          <h3>Misión</h3>
+          <p>Promover y salvaguardar la identidad y los saberes ancestrales mediante redes de comercio transparente y sostenible.</p>
+        </div>
+        <div class="valor-card">
+          <div class="valor-icono">🔭</div>
+          <h3>Visión</h3>
+          <p>Ser una plataforma referente regional e internacional en la integración de tecnología, sostenibilidad y cultura andina para el año 2030.</p>
+        </div>
+        <div class="valor-card">
+          <div class="valor-icono">🌱</div>
+          <h3>Nuestro origen</h3>
+          <p>Trabajamos junto a más de 150 familias productoras en veredas de Santander y la cordillera oriental colombiana.</p>
+        </div>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
-    <al class="nav-links">
-        <li><a href="index.html">Inicio</a></li>
-        <li><a href="nosotros.html"class="active">Quiénes somos</a></li>
-        <li><a href="productos.html">Productos</a></li>
-        <li><a href="contacto.html">Contacto</a></li>
-      </al>
+    <div class="franja-andina" aria-hidden="true"></div>
+    <div class="footer-contenido">
+      <div class="footer-marca">
+        <a href="index.html" class="logo">🌿 Raíz Andina</a>
+        <p>Comercio justo de café, cacao y miel de la cordillera oriental colombiana.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Explorar</h4>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="nosotros.html" class="active">Quiénes somos</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contacto</h4>
+        <p>hola@raizandina.co</p>
+        <p>Zapatoca, Santander, Colombia</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
+    </div>
   </footer>
+
+  <script src="js/nav.js"></script>
 </body>
 </html>
