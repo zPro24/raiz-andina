@@ -5,6 +5,77 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&display=swap');
 
 /* ==========================================
+   AJUSTE RESPONSIVO DEL PANEL PARA MÓVILES (< 840px)
+   ========================================== */
+@media (max-width: 840px) {
+
+  /* 1. Convertir la disposición de 2 columnas a 1 sola columna vertical */
+  .panel-layout {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+    margin: 1rem auto !important;
+    padding: 0 0.8rem !important;
+  }
+
+  /* 2. Convertir el menú lateral en una barra horizontal deslizable */
+  .sidebar {
+    padding: 1rem !important;
+  }
+
+  .user-card-mini {
+    padding-bottom: 0.8rem !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  .sidebar-nav {
+    display: flex !important;
+    flex-direction: row !important; /* Coloca los botones lado a lado */
+    overflow-x: auto !important;    /* Permite deslizar horizontalmente si no caben */
+    gap: 0.5rem !important;
+    padding-bottom: 0.4rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .sidebar-nav .nav-item {
+    white-space: nowrap !important; /* Evita que el texto de los botones se divida en varias líneas */
+    font-size: 13px !important;
+    padding: 0.5rem 0.8rem !important;
+    flex-shrink: 0;                 /* Mantiene el tamaño adecuado de cada botón */
+  }
+
+  /* 3. Ajustes de la tarjeta de contenido principal */
+  .panel-content {
+    padding: 1.2rem !important;
+    box-sizing: border-box !important;
+  }
+
+  .panel-content h2 {
+    font-size: 1.4rem !important;
+  }
+
+  /* 4. Métricas de impacto en 1 columna en teléfonos */
+  .stats-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.8rem !important;
+  }
+
+  /* 5. Asegurar que las tablas no rompan el ancho del teléfono */
+  .table-responsive {
+    width: 100% !important;
+    overflow-x: auto !important;
+    display: block;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 6. Ajuste de los formularios e inputs en pantalla pequeña */
+  .form-container,
+  .form-group input {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+}
+
+/* ==========================================
    1. VARIABLES DE MARCA (paleta oficial — no se modifica)
    ========================================== */
 :root {
