@@ -12,6 +12,14 @@ const authRoutes = require('./routes/authRoutes');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Importar rutas
+const authRoutes = require('./routes/authRoutes');
+const apiRoutes = require('./routes/api');
+
+// Registrar middlewares de rutas
+app.use('/api/auth', authRoutes);
+app.use('/api', apiRoutes);
+
 // 4. Middlewares
 app.use(cors());
 app.use(express.json());
