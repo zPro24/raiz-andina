@@ -310,4 +310,74 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // Dentro de DOMContentLoaded en panel.js:
+
+const btnToggleForm = document.getElementById('btn-toggle-form-admin');
+const formAdminContainer = document.getElementById('form-admin-container');
+const btnCancelarAdmin = document.getElementById('btn-cancelar-admin');
+const formCrearAdmin = document.getElementById('form-crear-admin');
+
+// Toggle para mostrar/ocultar el formulario de creación
+if (btnToggleForm && formAdminContainer) {
+  btnToggleForm.addEventListener('click', () => {
+    const visible = formAdminContainer.style.display !== 'none';
+    formAdminContainer.style.display = visible ? 'none' : 'block';
+  });
+}
+
+if (btnCancelarAdmin && formAdminContainer) {
+  btnCancelarAdmin.addEventListener('click', () => {
+    formAdminContainer.style.display = 'none';
+    if (formCrearAdmin) formCrearAdmin.reset();
+  });
+}
+
+// Enviar formulario para crear un nuevo usuario/admin
+if (formCrearAdmin) {
+  formCrearAdmin.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const nombre = document.getElementById('admin-new-nombre').value.trim();
+    const email = document.getElementById('admin-new-email').value.trim();
+    const password = document.getElementById('admin-new-pass').value;
+    const rol = document.getElementById('admin-new-rol').value;
+    const telefono = document.getElementById('admin-new-telefono').value.trim();
+    const direccion = document.getElementById('admin-new-direccion').value.trim();
+
+    const submitBtn = formCrearAdmin.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      const res = await fetch('https://backend-web-sz3a.onrender.com/api/admin/usuarios', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ nombre, email, password, rol, telefono, direccion })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        notify('¡Usuario registrado con éxito!', 'success');
+        formCrearAdmin.reset();
+        formAdminContainer.style.display = 'none';
+        
+        // Recargar la tabla de usuarios
+        if (typeof cargarUsuariosAdmin === 'function') {
+          cargarUsuariosAdmin();
+        }
+      } else {
+        notify(data.error || 'No se pudo crear el usuario', 'error');
+      }
+    } catch (err) {
+      console.error('Error al registrar usuario:', err);
+      notify('Error al conectar con el servidor', 'error');
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+}
 });
