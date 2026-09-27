@@ -3,121 +3,282 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Inicia sesión o crea tu cuenta en Raíz Andina para gestionar tus pedidos.">
-  <title>Raíz Andina - Iniciar sesión</title>
+  <title>Raíz Andina — Acceso & Autenticación Segura</title>
+  <meta name="description" content="Inicia sesión o regístrate en la plataforma de Raíz Andina para acceder a tu panel de usuario y pedidos.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            andina: {
+              dark: '#06090e',
+              card: 'rgba(13, 20, 36, 0.7)',
+              emerald: '#10b981',
+              cyan: '#06b6d4',
+              gold: '#f59e0b',
+            }
+          },
+          fontFamily: {
+            heading: ['Space Grotesk', 'sans-serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Estilos Customizados & Glassmorphism -->
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <!-- Barra de progreso superior -->
+  <div id="scroll-progress"></div>
+
+  <!-- Canvas de partículas -->
+  <canvas id="ambient-canvas"></canvas>
+
+  <!-- Cabecera con Navbar Island -->
   <header>
-    <nav class="navbar">
-      <a href="index.html" class="logo">🌿 Raíz Andina</a>
-      <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-links">
-        <span></span>
-      </button>
-      <ul class="nav-links" id="nav-links">
+    <nav class="navbar-island">
+      <a href="index.html" class="logo">
+        <span class="logo-badge">🌿</span>
+        <span class="logo-text">Raíz Andina</span>
+      </a>
+
+      <ul class="nav-links">
         <li><a href="index.html">Inicio</a></li>
         <li><a href="nosotros.html">Quiénes somos</a></li>
         <li><a href="productos.html">Productos</a></li>
         <li><a href="contacto.html">Contacto</a></li>
-        <li><a href="login.html" class="btn-login-nav">Iniciar sesión</a></li>
       </ul>
+
+      <div class="nav-right">
+        <a href="login.html" class="btn-login-nav" style="border-color: #34d399; background: rgba(16, 185, 129, 0.2);">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <span>Acceso</span>
+        </a>
+
+        <!-- Botón Hamburguesa Animado -->
+        <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú de navegación" aria-expanded="false">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
     </nav>
   </header>
 
-  <div class="franja-andina" aria-hidden="true"></div>
+  <!-- Drawer Menú Móvil -->
+  <div id="mobile-drawer" class="mobile-drawer" aria-hidden="true">
+    <div class="drawer-header">
+      <a href="index.html" class="logo">
+        <span class="logo-badge">🌿</span>
+        <span class="logo-text">Raíz Andina</span>
+      </a>
+      <button id="close-drawer" class="drawer-close-btn" aria-label="Cerrar menú">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <div class="drawer-body">
+      <ul class="mobile-nav-list">
+        <li>
+          <a href="index.html" class="mobile-nav-link">
+            <div class="nav-item-left">
+              <span class="nav-icon-badge">🏠</span>
+              <span class="nav-text">Inicio</span>
+            </div>
+            <span class="nav-arrow">→</span>
+          </a>
+        </li>
+        <li>
+          <a href="nosotros.html" class="mobile-nav-link">
+            <div class="nav-item-left">
+              <span class="nav-icon-badge">👥</span>
+              <span class="nav-text">Quiénes somos</span>
+            </div>
+            <span class="nav-arrow">→</span>
+          </a>
+        </li>
+        <li>
+          <a href="productos.html" class="mobile-nav-link">
+            <div class="nav-item-left">
+              <span class="nav-icon-badge">☕</span>
+              <span class="nav-text">Productos</span>
+            </div>
+            <span class="nav-arrow">→</span>
+          </a>
+        </li>
+        <li>
+          <a href="contacto.html" class="mobile-nav-link">
+            <div class="nav-item-left">
+              <span class="nav-icon-badge">✉️</span>
+              <span class="nav-text">Contacto</span>
+            </div>
+            <span class="nav-arrow">→</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="drawer-footer">
+      <a href="login.html" class="btn-primary btn-block drawer-btn-login">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span>Acceder a Mi Cuenta</span>
+      </a>
+      <div class="drawer-footer-info">
+        <span style="color: #34d399;">🟢 Red Santander Activa</span>
+        <span>•</span>
+        <a href="contacto.html">Soporte</a>
+      </div>
+    </div>
+  </div>
 
   <main>
-    <section class="container-page login-grid">
-      <!-- PANEL LATERAL (Fondo oscuro) -->
+    <section class="glass-container login-grid reveal-on-scroll">
+      <!-- PANEL LATERAL (Branding Futurista) -->
       <div class="panel-bienvenida">
-        <h2 id="panel-titulo">¡Bienvenido de nuevo!</h2>
-        <p id="panel-desc">Accede a tu cuenta para gestionar tus pedidos y conocer más sobre nuestras iniciativas de comercio justo.</p>
+        <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+          <span class="hero-badge" style="margin-bottom: 0;">
+            <span class="pulse-dot"></span>
+            PORTAL SEGURO
+          </span>
+        </div>
+
+        <h2 id="panel-titulo" style="font-size: 2.2rem; font-weight: 800; line-height: 1.2;">
+          ¡Bienvenido de nuevo!
+        </h2>
+        
+        <p id="panel-desc" style="margin-top: 0.75rem; margin-bottom: 2rem;">
+          Accede a tu cuenta para gestionar tus órdenes, trazabilidad de cosechas y métricas de impacto andino.
+        </p>
+
+        <!-- Puntos clave del portal -->
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.875rem; color: var(--text-secondary);">
+            <span style="color: #34d399; font-size: 1.1rem;">🔒</span>
+            <span>Autenticación stateless cifrada con JWT</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.875rem; color: var(--text-secondary);">
+            <span style="color: #38bdf8; font-size: 1.1rem;">🌱</span>
+            <span>Seguimiento de tu impacto en familias andinas</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.875rem; color: var(--text-secondary);">
+            <span style="color: #fbbf24; font-size: 1.1rem;">⚡</span>
+            <span>Historial y reorden de lotes en un clic</span>
+          </div>
+        </div>
       </div>
 
       <!-- FORMULARIO DE ACCESO (LOGIN) -->
       <div class="form-acceso" id="sec-login">
-        <h2>Iniciar sesión</h2>
-        <form id="form-login">
+        <div style="margin-bottom: 1.5rem;">
+          <span class="section-tag">// IDENTIFICACIÓN</span>
+          <h2 style="font-size: 1.8rem; margin-top: 0.25rem;">Iniciar sesión</h2>
+          <p style="color: var(--text-muted); font-size: 0.875rem;">Ingresa tus credenciales para ingresar a tu panel.</p>
+        </div>
+
+        <form id="form-login" class="form-container">
           <div class="form-group">
             <label for="correo">Correo electrónico</label>
-            <input type="email" id="correo" required placeholder="correo@ejemplo.com">
+            <input type="email" id="correo" required placeholder="correo@ejemplo.com" autocomplete="email">
           </div>
 
           <div class="form-group">
             <label for="password">Contraseña</label>
-            <input type="password" id="password" required placeholder="••••••••">
+            <input type="password" id="password" required placeholder="••••••••" autocomplete="current-password">
           </div>
 
           <div class="form-checkbox">
             <input type="checkbox" id="recordarme">
-            <label for="recordarme">Recordarme en este equipo</label>
+            <label for="recordarme">Mantener sesión iniciada en este equipo</label>
           </div>
 
-          <button type="submit" class="btn-primary btn-block">Entrar</button>
+          <button type="submit" class="btn-primary btn-block" style="margin-top: 0.5rem;">
+            <span>Entrar al Panel</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path>
+              <polyline points="10 17 15 12 10 7"></polyline>
+              <line x1="15" y1="12" x2="3" y2="12"></line>
+            </svg>
+          </button>
 
           <div class="login-footer-links">
-            <p>¿No tienes una cuenta? <a href="#" id="link-ir-registro">Regístrate aquí</a></p>
+            <p>¿No tienes una cuenta aún? <a href="#" id="link-ir-registro">Crear cuenta gratis</a></p>
           </div>
         </form>
       </div>
 
-      <!-- FORMULARIO DE REGISTRO (OCULTO POR DEFECTO) -->
+      <!-- FORMULARIO DE REGISTRO (Oculto por defecto, alternable dinámicamente) -->
       <div class="form-acceso" id="sec-registro" style="display: none;">
-        <h2>Crear una cuenta</h2>
-        <form id="form-register">
+        <div style="margin-bottom: 1.5rem;">
+          <span class="section-tag">// NUEVA CUENTA</span>
+          <h2 style="font-size: 1.8rem; margin-top: 0.25rem;">Crear una cuenta</h2>
+          <p style="color: var(--text-muted); font-size: 0.875rem;">Únete a nuestra red de apoyo agroecológico.</p>
+        </div>
+
+        <form id="form-register" class="form-container">
           <div class="form-group">
             <label for="reg-nombre">Nombre completo</label>
-            <input type="text" id="reg-nombre" required placeholder="Tu nombre">
+            <input type="text" id="reg-nombre" required placeholder="Ej: Valentina Morales" autocomplete="name">
           </div>
 
           <div class="form-group">
             <label for="reg-correo">Correo electrónico</label>
-            <input type="email" id="reg-correo" required placeholder="correo@ejemplo.com">
+            <input type="email" id="reg-correo" required placeholder="correo@ejemplo.com" autocomplete="email">
           </div>
 
           <div class="form-group">
-            <label for="reg-password">Contraseña</label>
-            <input type="password" id="reg-password" required placeholder="••••••••">
+            <label for="reg-password">Contraseña segura</label>
+            <input type="password" id="reg-password" required placeholder="••••••••" autocomplete="new-password">
           </div>
 
-          <button type="submit" class="btn-primary btn-block">Registrarse</button>
+          <button type="submit" class="btn-primary btn-block" style="margin-top: 0.5rem;">
+            <span>Completar Registro</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="8.5" cy="7" r="4"></circle>
+              <line x1="20" y1="8" x2="20" y2="14"></line>
+              <line x1="23" y1="11" x2="17" y2="11"></line>
+            </svg>
+          </button>
 
           <div class="login-footer-links">
-            <p>¿Ya tienes una cuenta? <a href="#" id="link-ir-login">Inicia sesión aquí</a></p>
+            <p>¿Ya tienes una cuenta registrada? <a href="#" id="link-ir-login">Inicia sesión aquí</a></p>
           </div>
         </form>
       </div>
+
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer>
-    <div class="franja-andina" aria-hidden="true"></div>
-    <div class="footer-contenido">
-      <div class="footer-marca">
-        <a href="index.html" class="logo">🌿 Raíz Andina</a>
-        <p>Comercio justo de café, cacao y miel de la cordillera oriental colombiana.</p>
+    <div class="footer-inner">
+      <div class="footer-bottom" style="padding-top: 0; border: none;">
+        <div>&copy; 2026 Raíz Andina. Todos los derechos reservados.</div>
+        <div class="footer-credits">
+          Desarrollado por: <strong>Álvaro Martínez</strong> & <strong>Jesús Gómez</strong>
+        </div>
       </div>
-      <div class="footer-col">
-        <h4>Explorar</h4>
-        <ul>
-          <li><a href="index.html">Inicio</a></li>
-          <li><a href="nosotros.html">Quiénes somos</a></li>
-          <li><a href="productos.html">Productos</a></li>
-          <li><a href="contacto.html">Contacto</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Contacto</h4>
-        <p>hola@raizandina.co</p>
-        <p>Zapatoca, Santander, Colombia</p>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Raíz Andina. Todos los derechos reservados.</p>
     </div>
   </footer>
 
-  <script src="js/nav.js"></script>
+  <script src="js/main.js"></script>
   <script src="js/auth.js"></script>
 </body>
 </html>

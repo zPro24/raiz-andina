@@ -1,5 +1,19 @@
+/**
+ * 🌿 RAÍZ ANDINA — CONTROLADOR DEL PANEL DE USUARIO (DASHBOARD)
+ * Integrado con API en Render: https://backend-web-sz3a.onrender.com/api/auth
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
   const API_URL = 'https://backend-web-sz3a.onrender.com/api/auth';
+
+  // Notificador visual suave
+  function notify(msg, type = 'success') {
+    if (typeof window.showToast === 'function') {
+      window.showToast(msg, type);
+    } else {
+      alert(msg);
+    }
+  }
 
   // 1. Verificar sesión
   const token = localStorage.getItem('token');
@@ -7,8 +21,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const usuarioNombre = localStorage.getItem('usuarioNombre');
 
   if (!token) {
-    alert('Debes iniciar sesión para acceder al panel.');
-    window.location.href = 'login.html';
+    notify('Debes iniciar sesión para acceder al panel.', 'error');
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 600);
     return;
   }
 
@@ -50,12 +66,14 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.removeItem('token');
       localStorage.removeItem('usuarioNombre');
       localStorage.removeItem('usuarioEmail');
-      alert('Has cerrado sesión correctamente.');
-      window.location.href = 'login.html';
+      notify('Has cerrado sesión correctamente.', 'success');
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 500);
     });
   }
 
-  // 5. Cargar datos del perfil desde el backend (para llenar los inputs)
+  // 5. Cargar datos del perfil desde el backend
   async function cargarPerfilServidor() {
     if (!usuarioEmail) return;
 
@@ -95,10 +113,17 @@ document.addEventListener('DOMContentLoaded', () => {
   if (formPerfil) {
     formPerfil.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const submitBtn = formPerfil.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.innerHTML : 'Guardar Cambios';
 
-      const nombre = document.getElementById('perfil-nombre').value;
-      const telefono = document.getElementById('perfil-telefono').value;
-      const direccion = document.getElementById('perfil-direccion').value;
+      const nombre = document.getElementById('perfil-nombre').value.trim();
+      const telefono = document.getElementById('perfil-telefono').value.trim();
+      const direccion = document.getElementById('perfil-direccion').value.trim();
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Guardando...';
+      }
 
       try {
         const res = await fetch(`${API_URL}/update-profile`, {
@@ -118,16 +143,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await res.json();
 
         if (res.ok) {
-          alert('¡Perfil actualizado con éxito!');
+          notify('¡Perfil actualizado con éxito!', 'success');
           localStorage.setItem('usuarioNombre', nombre);
           if (sidebarNombre) sidebarNombre.textContent = nombre;
           if (bienvenida) bienvenida.textContent = `Bienvenido/a, ${nombre}`;
         } else {
-          alert(data.error || 'No se pudo actualizar el perfil.');
+          notify(data.error || 'No se pudo actualizar el perfil.', 'error');
         }
       } catch (err) {
         console.error('Error al actualizar el perfil:', err);
-        alert('Error al conectar con el servidor.');
+        notify('Error al conectar con el servidor.', 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
       }
     });
   }
@@ -137,8 +167,21 @@ document.addEventListener('DOMContentLoaded', () => {
   if (formCambiarPassword) {
     formCambiarPassword.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const submitBtn = formCambiarPassword.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.innerHTML : 'Actualizar Contraseña';
+
       const passActual = document.getElementById('pass-actual').value;
       const passNueva = document.getElementById('pass-nueva').value;
+
+      if (!passActual || !passNueva) {
+        notify('Por favor completa todos los campos de contraseña', 'error');
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Actualizando...';
+      }
 
       try {
         const res = await fetch(`${API_URL}/update-password`, {
@@ -153,14 +196,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await res.json();
 
         if (res.ok) {
-          alert('¡Contraseña actualizada con éxito!');
+          notify('¡Contraseña actualizada con éxito!', 'success');
           formCambiarPassword.reset();
         } else {
-          alert(data.error || 'No se pudo actualizar la contraseña.');
+          notify(data.error || 'No se pudo actualizar la contraseña.', 'error');
         }
       } catch (err) {
         console.error('Error al actualizar contraseña:', err);
-        alert('Error al conectar con el servidor.');
+        notify('Error al conectar con el servidor.', 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
       }
     });
   }

@@ -1,3 +1,8 @@
+/**
+ * 🌿 RAÍZ ANDINA — CONTROLADOR DE AUTENTICACIÓN
+ * Integrado con API en Render: https://backend-web-sz3a.onrender.com/api/auth
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
   const formLogin = document.getElementById('form-login');
   const formRegister = document.getElementById('form-register');
@@ -16,14 +21,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // URL Base del Backend en Render
   const API_URL = 'https://backend-web-sz3a.onrender.com/api/auth';
 
+  // Notificador visual suave
+  function notify(msg, type = 'success') {
+    if (typeof window.showToast === 'function') {
+      window.showToast(msg, type);
+    } else {
+      alert(msg);
+    }
+  }
+
   // Alternar a Formulario de Registro en login.html
   if (linkIrRegistro) {
     linkIrRegistro.addEventListener('click', (e) => {
       e.preventDefault();
-      secLogin.style.display = 'none';
-      secRegistro.style.display = 'block';
+      if (secLogin) secLogin.style.display = 'none';
+      if (secRegistro) {
+        secRegistro.style.display = 'block';
+        secRegistro.style.animation = 'fadeInTab 0.3s ease';
+      }
       if (panelTitulo) panelTitulo.textContent = '¡Únete a Raíz Andina!';
-      if (panelDesc) panelDesc.textContent = 'Crea tu cuenta para formar parte de la red de comercio justo y apoyo comunitario.';
+      if (panelDesc) panelDesc.textContent = 'Crea tu cuenta para formar parte de la red de comercio justo, trazabilidad y apoyo comunitario.';
     });
   }
 
@@ -31,8 +48,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (linkIrLogin) {
     linkIrLogin.addEventListener('click', (e) => {
       e.preventDefault();
-      secRegistro.style.display = 'none';
-      secLogin.style.display = 'block';
+      if (secRegistro) secRegistro.style.display = 'none';
+      if (secLogin) {
+        secLogin.style.display = 'block';
+        secLogin.style.animation = 'fadeInTab 0.3s ease';
+      }
       if (panelTitulo) panelTitulo.textContent = '¡Bienvenido de nuevo!';
       if (panelDesc) panelDesc.textContent = 'Accede a tu cuenta para gestionar tus pedidos y conocer más sobre nuestras iniciativas de comercio justo.';
     });
@@ -42,8 +62,26 @@ document.addEventListener('DOMContentLoaded', () => {
   if (formLogin) {
     formLogin.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('correo').value;
+      const submitBtn = formLogin.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.innerHTML : 'Entrar';
+
+      const email = document.getElementById('correo').value.trim();
       const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        notify('Por favor completa todos los campos', 'error');
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <svg style="animation: spin 1s linear infinite; display: inline-block; width: 16px; height: 16px; margin-right: 8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+            <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+          </svg> Conectando...
+        `;
+      }
 
       try {
         const res = await fetch(`${API_URL}/login`, {
@@ -55,24 +93,34 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await res.json();
 
         if (res.ok) {
+          notify('¡Sesión iniciada correctamente!', 'success');
           localStorage.setItem('token', data.token);
           if (data.usuario?.nombre) {
             localStorage.setItem('usuarioNombre', data.usuario.nombre);
           }
-          // Guardar el correo para la consulta en el servidor
           if (data.usuario?.email) {
             localStorage.setItem('usuarioEmail', data.usuario.email);
           } else {
             localStorage.setItem('usuarioEmail', email);
           }
 
-          window.location.href = 'panel.html';
+          setTimeout(() => {
+            window.location.href = 'panel.html';
+          }, 600);
         } else {
-          alert(data.error || 'Credenciales inválidas');
+          notify(data.error || 'Credenciales inválidas.', 'error');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          }
         }
       } catch (err) {
         console.error('Error al iniciar sesión:', err);
-        alert('Error al conectar con el servidor.');
+        notify('No se pudo conectar con el servidor. Revisa tu conexión.', 'error');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
       }
     });
   }
@@ -81,9 +129,27 @@ document.addEventListener('DOMContentLoaded', () => {
   if (formRegister) {
     formRegister.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const nombre = document.getElementById('reg-nombre').value;
-      const email = document.getElementById('reg-correo').value;
+      const submitBtn = formRegister.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.innerHTML : 'Registrarse';
+
+      const nombre = document.getElementById('reg-nombre').value.trim();
+      const email = document.getElementById('reg-correo').value.trim();
       const password = document.getElementById('reg-password').value;
+
+      if (!nombre || !email || !password) {
+        notify('Por favor completa todos los campos requeridos', 'error');
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <svg style="animation: spin 1s linear infinite; display: inline-block; width: 16px; height: 16px; margin-right: 8px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+            <path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"></path>
+          </svg> Registrando...
+        `;
+      }
 
       try {
         const res = await fetch(`${API_URL}/register`, {
@@ -95,14 +161,25 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await res.json();
 
         if (res.ok) {
-          alert('¡Registro exitoso! Ya puedes iniciar sesión con tu cuenta.');
-          if (linkIrLogin) linkIrLogin.click();
+          notify('¡Registro exitoso! Ya puedes iniciar sesión.', 'success');
+          formRegister.reset();
+          if (linkIrLogin) {
+            setTimeout(() => linkIrLogin.click(), 800);
+          }
         } else {
-          alert(data.error || 'Error al registrar el usuario.');
+          notify(data.error || 'Error al registrar el usuario.', 'error');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+          }
         }
       } catch (err) {
         console.error('Error en el registro:', err);
-        alert('Error al conectar con el servidor.');
+        notify('No se pudo conectar con el servidor.', 'error');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
       }
     });
   }
@@ -113,8 +190,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const usuarioNombre = localStorage.getItem('usuarioNombre');
 
     if (!token) {
-      alert('Debes iniciar sesión para acceder a esta página.');
-      window.location.href = 'login.html';
+      notify('Debes iniciar sesión para acceder al panel.', 'error');
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 500);
       return;
     }
 
@@ -130,24 +209,34 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.removeItem('token');
       localStorage.removeItem('usuarioNombre');
       localStorage.removeItem('usuarioEmail');
-      alert('Has cerrado sesión correctamente.');
-      window.location.href = 'login.html';
+      notify('Has cerrado sesión correctamente.', 'success');
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 500);
     });
   }
 
-  // 5. Formulario de Actualizar Contraseña (Envia email, passActual y passNueva)
+  // 5. Formulario de Actualizar Contraseña
   if (formCambiarPassword) {
     formCambiarPassword.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const submitBtn = formCambiarPassword.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.innerHTML : 'Actualizar Contraseña';
+
       const passActual = document.getElementById('pass-actual').value;
       const passNueva = document.getElementById('pass-nueva').value;
       const email = localStorage.getItem('usuarioEmail');
       const token = localStorage.getItem('token');
 
       if (!email) {
-        alert('Sesión no válida. Por favor vuelve a iniciar sesión.');
+        notify('Sesión no válida. Por favor vuelve a iniciar sesión.', 'error');
         window.location.href = 'login.html';
         return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = 'Actualizando...';
       }
 
       try {
@@ -163,14 +252,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await res.json();
 
         if (res.ok) {
-          alert('¡Contraseña actualizada con éxito!');
+          notify('¡Contraseña actualizada con éxito!', 'success');
           formCambiarPassword.reset();
         } else {
-          alert(data.error || 'No se pudo actualizar la contraseña.');
+          notify(data.error || 'No se pudo actualizar la contraseña.', 'error');
         }
       } catch (err) {
         console.error('Error al actualizar contraseña:', err);
-        alert('Error al conectar con el servidor.');
+        notify('Error al conectar con el servidor.', 'error');
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalText;
+        }
       }
     });
   }
