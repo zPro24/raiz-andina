@@ -67,7 +67,7 @@ exports.login = async (req, res) => {
         id: usuario.id,
         nombre: usuario.nombre,
         email: usuario.email,
-        rol: usuario.rol || 'consumidor'
+        rol: usuario.rol
       }
     });
   } catch (err) {
