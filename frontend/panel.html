@@ -194,6 +194,12 @@
             <span class="icon">🔒</span>
             <span>Seguridad</span>
           </button>
+
+          <!-- Botón exclusivo para Administradores -->
+          <button type="button" id="nav-item-admin" class="nav-item" data-tab="tab-admin" style="display: none">
+            <span class="icon">👑</span>
+            <span>Gestión Usuarios</span>
+          </button>
         </nav>
       </aside>
 
@@ -428,6 +434,43 @@
               <span>Actualizar Contraseña</span>
             </button>
           </form>
+        </div>
+
+        <!-- PESTAÑA 6: GESTIÓN DE USUARIOS (SÓLO ADMIN) -->
+        <div id="tab-admin" class="tab-content">
+          <div style="border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+            <span class="section-tag" style="color: #38bdf8;">// ADMINISTRACIÓN DEL SISTEMA</span>
+            <h2>Gestión de Usuarios</h2>
+            <p style="color: var(--text-secondary); margin-top: 0.25rem;">
+              Lista de todos los usuarios registrados en el sistema de Raíz Andina.
+            </p>
+          </div>
+          <!-- Tabla para Escritorio / Tablets -->
+          <div class="table-responsive table-desktop" style="margin-top: 1.5rem;">
+            <table class="table-custom">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Email</th>
+                  <th>Teléfono</th>
+                  <th>Dirección</th>
+                  <th>Rol</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-usuarios-body">
+                <tr>
+                  <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 2rem;">
+                    Cargando lista de usuarios...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- Vista Móvil en Tarjetas -->
+          <div id="admin-mobile-list" class="orders-mobile-list" style="margin-top: 1.25rem;">
+            <!-- Se generará dinámicamente -->
+          </div>
         </div>
 
       </section>
