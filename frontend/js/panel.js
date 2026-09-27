@@ -369,31 +369,31 @@ if (formCrearAdmin) {
         body: JSON.stringify({ nombre, email, password, rol, telefono, direccion })
       });
 
+      // Verificar si la respuesta es verdaderamente un JSON
+      const contentType = res.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const errorTexto = await res.text();
+        console.error('El servidor respondió con HTML en lugar de JSON. Código de estado:', res.status);
+        console.error('Contenido recibido:', errorTexto);
+        notify(`Error ${res.status}: La ruta no existe o hubo un fallo interno en el servidor.`, 'error');
+        return;
+      }
+      
       const data = await res.json();
-
+      
       if (res.ok) {
         notify('¡Usuario registrado con éxito!', 'success');
         formCrearAdmin.reset();
         const container = document.getElementById('form-admin-container');
         if (container) container.style.display = 'none';
-        
-        // Recargar la tabla
-        if (typeof cargarUsuariosAdmin === 'function') {
-          cargarUsuariosAdmin();
-        }
+        if (typeof cargarUsuariosAdmin === 'function') cargarUsuariosAdmin();
       } else {
         notify(data.error || 'No se pudo crear el usuario', 'error');
       }
     } catch (err) {
       console.error('Error detallado de la petición:', err);
-      notify('No se pudo conectar con el servidor de Render. Revisa la consola (F12).', 'error');
-    } finally {
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Guardar Usuario';
-      }
+      notify('Error de conexión o fallo procesando la respuesta.', 'error');
     }
-  });
-}
-
+    });
+  }
 });
