@@ -5,27 +5,21 @@ require('dotenv').config();
 // 1. Conexión a la base de datos
 const pool = require('./config/db');
 
-// 2. Rutas
-const authRoutes = require('./routes/authRoutes');
-
-// 3. Inicializar Express (DEBE IR ANTES DE USAR app.use)
+// 2. Inicializar Express
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Importar rutas
-const authRoutes = require('./routes/authRoutes');
-const apiRoutes = require('./routes/api');
-
-// Registrar middlewares de rutas
-app.use('/api/auth', authRoutes);
-app.use('/api', apiRoutes);
-
-// 4. Middlewares
+// 3. Middlewares Globales (DEBEN IR ANTES DE LAS RUTAS)
 app.use(cors());
 app.use(express.json());
 
-// 5. Declaración de Rutas
-app.use('/api/auth', authRoutes);
+// 4. Importar Rutas
+const authRoutes = require('./routes/authRoutes');
+const apiRoutes = require('./routes/api');
+
+// 5. Registrar Rutas
+app.use('/api/auth', authRoutes); // Login, Registro, Perfil, Password
+app.use('/api', apiRoutes);       // Admin (usuarios, crear-admin) y Pedidos
 
 app.get('/', (req, res) => {
   res.send('API de Raíz Andina funcionando correctamente 🚀');
