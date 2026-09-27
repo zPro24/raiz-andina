@@ -54,7 +54,7 @@ exports.login = async (req, res) => {
 
     // 3. Crear token JWT incluyendo el ROL
     const token = jwt.sign(
-      { id: usuario.id, email: usuario.email, rol: usuario.rol || 'consumidor' },
+      { id: usuario.id, email: usuario.email, rol: usuario.rol },
       process.env.JWT_SECRET || 'secreto_super_seguro',
       { expiresIn: '24h' }
     );
