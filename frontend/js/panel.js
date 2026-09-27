@@ -55,6 +55,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const activeSection = document.getElementById(targetTab);
       if (activeSection) {
         activeSection.classList.add('active');
+
+        // En pantallas móviles, desplazar suavemente al contenido seleccionado
+        if (window.innerWidth < 768) {
+          const headerOffset = 90;
+          const elementPosition = activeSection.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }
       }
     });
   });

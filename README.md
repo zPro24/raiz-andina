@@ -9,16 +9,16 @@ Plataforma web para el proyecto **Raíz Andina**, desarrollada con una arquitect
 El proyecto implementa una arquitectura cliente-servidor con autenticación basada en tokens (JWT) y almacenamiento persistente en la nube.
 
 ### **Frontend**
-* **HTML5 / CSS3 / JavaScript (Vanilla)**: Sin frameworks pesados para maximizar la velocidad de carga.
-* **Navegación**: Enrutamiento basado en Hash (`window.location.hash`) para una experiencia SPA (*Single Page Application*).
-* **Alojamiento**: [Netlify](https://www.netlify.com/).
+* **HTML5 / CSS3 / JavaScript (Vanilla)**: Arquitectura multi-página sin frameworks pesados para maximizar la velocidad de carga.
+* **Diseño**: Tailwind CSS (CDN) + sistema de diseño propio con dark mode nativo, glassmorphism, animaciones GPU a 60 FPS y efectos neón.
+* **Alojamiento**: [Vercel](https://vercel.com/) (Vercel Edge Network).
 
 ### **Backend**
 * **Node.js & Express**: API RESTful para el procesamiento de solicitudes HTTP.
 * **Seguridad & Auth**:
   * `bcryptjs`: Encriptación salteada de contraseñas de usuario.
   * `jsonwebtoken (JWT)`: Emisión de tokens de sesión para autenticación stateless.
-  * `cors`: Configuración de políticas de origen cruzado para comunicación segura entre Netlify y Render.
+  * `cors`: Configuración de políticas de origen cruzado para comunicación segura entre Vercel y Render.
 * **Alojamiento**: [Render](https://render.com/) (Web Service).
 
 ### **Base de Datos**
@@ -33,20 +33,31 @@ El proyecto implementa una arquitectura cliente-servidor con autenticación basa
 raiz-andina/
 ├── backend/
 │   ├── config/
-│   │   └── db.js            # Configuración de conexión PostgreSQL
+│   │   └── db.js               # Configuración de conexión PostgreSQL (pool SSL)
 │   ├── controllers/
-│   │   └── authController.js# Lógica de registro y login de usuarios
+│   │   └── authController.js   # Lógica de registro y login de usuarios
 │   ├── routes/
-│   │   └── authRoutes.js    # Definición de endpoints de autenticación
-│   ├── .env                 # Variables de entorno (puerto, BD, secrets)
-│   ├── package.json         # Dependencias y scripts de Node.js
-│   └── server.js            # Punto de entrada de la API Express
+│   │   └── authRoutes.js       # Definición de endpoints de autenticación
+│   ├── .env                    # Variables de entorno (no versionado)
+│   ├── .env.example            # Plantilla de variables de entorno
+│   ├── .gitignore              # Exclusiones de git para el backend
+│   ├── package.json            # Dependencias y scripts de Node.js
+│   └── server.js               # Punto de entrada de la API Express
 └── frontend/
-    ├── css/                 # Estilos globales de la plataforma
+    ├── assets/
+    │   └── img/                # Imágenes y recursos estáticos
+    ├── css/
+    │   └── style.css           # Sistema de diseño completo (dark mode, glassmorphism, animaciones GPU)
     ├── js/
-    │   ├── main.js          # Control de navegación y vistas
-    │   └── auth.js          # Intercepción de formularios y peticiones a la API
-    └── index.html           # Documento principal SPA
+    │   ├── auth.js             # Intercepción de formularios y peticiones a la API de autenticación
+    │   ├── main.js             # Animaciones, partículas canvas, scroll reveal y filtros de productos
+    │   └── panel.js            # Lógica del dashboard de usuario (perfil, pedidos, favoritos)
+    ├── index.html              # Página principal (hero, productos destacados, impacto)
+    ├── nosotros.html           # Página "Sobre Nosotros" (historia, valores, equipo)
+    ├── productos.html          # Catálogo de productos con filtros interactivos
+    ├── contacto.html           # Formulario de contacto
+    ├── login.html              # Página de autenticación (login / registro)
+    └── panel.html              # Dashboard privado del usuario autenticado
 ```
 
 ---
