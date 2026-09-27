@@ -50,6 +50,367 @@
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ==========================================================================
+   ☀️ MODO CLARO — Light Mode Override
+   Activado con la clase .light-mode en <html>
+   ========================================================================== */
+html.light-mode {
+  /* Fondos claros */
+  --bg-dark: #f0f4f0;
+  --bg-darker: #e2e8e2;
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-card-hover: rgba(255, 255, 255, 0.95);
+  --bg-card-solid: #ffffff;
+
+  /* Textos oscuros */
+  --text-main: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+
+  /* Bordes más visibles en claro */
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --glass-border-hover: rgba(5, 150, 105, 0.4);
+
+  /* Acentos más saturados para contraste en blanco */
+  --neon-emerald: #059669;
+  --neon-emerald-light: #10b981;
+  --neon-emerald-glow: rgba(5, 150, 105, 0.25);
+  --neon-cyan: #0891b2;
+  --neon-cyan-glow: rgba(8, 145, 178, 0.2);
+  --neon-gold: #d97706;
+  --neon-gold-glow: rgba(217, 119, 6, 0.2);
+
+  color-scheme: light;
+}
+
+/* Fondo principal en modo claro */
+html.light-mode body {
+  background-image:
+    radial-gradient(circle at 15% 15%, rgba(5, 150, 105, 0.07) 0%, transparent 40%),
+    radial-gradient(circle at 85% 25%, rgba(8, 145, 178, 0.05) 0%, transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(217, 119, 6, 0.04) 0%, transparent 50%);
+}
+
+/* Grid de fondo en modo claro más sutil */
+html.light-mode body::before {
+  background-image:
+    linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
+/* Navbar en modo claro */
+html.light-mode .navbar-island {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15), 0 0 20px rgba(5, 150, 105, 0.06);
+}
+
+html.light-mode header.scrolled .navbar-island {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(5, 150, 105, 0.3);
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.2);
+}
+
+html.light-mode .logo-text {
+  background: linear-gradient(120deg, #0f172a 40%, #059669 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+html.light-mode .nav-links a {
+  color: var(--text-secondary);
+}
+
+html.light-mode .nav-links a:hover {
+  color: var(--text-main);
+}
+
+html.light-mode .nav-links a.active {
+  color: #059669;
+}
+
+html.light-mode .btn-login-nav {
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.12), rgba(8, 145, 178, 0.12));
+  color: #059669 !important;
+  border-color: rgba(5, 150, 105, 0.3);
+}
+
+/* Mobile drawer en modo claro */
+html.light-mode .mobile-drawer {
+  background: rgba(240, 244, 240, 0.98);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+html.light-mode .mobile-nav-link {
+  color: var(--text-secondary);
+}
+
+html.light-mode .mobile-nav-link.active,
+html.light-mode .mobile-nav-link:hover {
+  color: var(--text-main);
+  background: rgba(5, 150, 105, 0.08);
+}
+
+/* Scrollbar en modo claro */
+html.light-mode ::-webkit-scrollbar-track {
+  background: var(--bg-darker);
+}
+html.light-mode ::-webkit-scrollbar-thumb {
+  background: rgba(5, 150, 105, 0.3);
+}
+
+/* ==========================================================================
+   ☀️ LIGHT MODE — Overrides de elementos con colores hardcodeados oscuros
+   ========================================================================== */
+
+/* ── Mobile Drawer & Nav Links ── */
+html.light-mode .mobile-drawer {
+  background: rgba(240, 244, 240, 0.98) !important;
+}
+html.light-mode .mobile-nav-link {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+html.light-mode .mobile-nav-link:hover,
+html.light-mode .mobile-nav-link.active {
+  background: rgba(5, 150, 105, 0.1);
+  border-color: rgba(5, 150, 105, 0.35);
+  box-shadow: 0 0 18px rgba(5, 150, 105, 0.1);
+}
+html.light-mode .mobile-nav-link.active .nav-text {
+  color: #059669;
+}
+html.light-mode .mobile-nav-link:hover .nav-arrow,
+html.light-mode .mobile-nav-link.active .nav-arrow {
+  color: #059669;
+}
+html.light-mode .nav-icon-badge {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+html.light-mode .mobile-nav-link.active .nav-icon-badge {
+  background: rgba(5, 150, 105, 0.15);
+  border-color: rgba(5, 150, 105, 0.4);
+}
+html.light-mode .drawer-footer {
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ── Hero Visual (tilt-card + HUD) ── */
+html.light-mode .tilt-card {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.85), rgba(240, 244, 240, 0.95));
+  border-color: rgba(5, 150, 105, 0.3);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 30px rgba(5, 150, 105, 0.12);
+}
+html.light-mode .tilt-card:hover {
+  border-color: rgba(5, 150, 105, 0.55);
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.2), 0 0 45px rgba(5, 150, 105, 0.2);
+}
+html.light-mode .hero-hud-overlay {
+  background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(240,244,240,0.65) 100%);
+}
+html.light-mode .hud-pill {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #0891b2;
+}
+html.light-mode .hud-bottom {
+  background: rgba(255, 255, 255, 0.88);
+  border-color: rgba(5, 150, 105, 0.3);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+html.light-mode .hud-bottom-title {
+  color: #0f172a;
+}
+html.light-mode .hud-bottom-desc {
+  color: #475569;
+}
+
+/* ── Secciones generales ── */
+html.light-mode .section-tag {
+  color: #059669;
+}
+html.light-mode .hero-badge {
+  background: rgba(5, 150, 105, 0.1);
+  border-color: rgba(5, 150, 105, 0.3);
+  color: #059669;
+}
+
+/* ── Productos: card normal + destacado ── */
+html.light-mode .card-producto {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(0, 0, 0, 0.09);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+html.light-mode .card-producto:hover {
+  background: rgba(255, 255, 255, 0.97);
+  border-color: rgba(5, 150, 105, 0.35);
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.12), 0 0 20px rgba(5, 150, 105, 0.1);
+}
+html.light-mode .card-producto.destacado {
+  background: linear-gradient(145deg, rgba(255,255,255,0.88), rgba(240,248,244,0.95));
+  border-color: rgba(5, 150, 105, 0.35);
+  box-shadow: 0 20px 45px -10px rgba(0,0,0,0.12), 0 0 30px rgba(5,150,105,0.1);
+}
+html.light-mode .producto-img-box {
+  background: #e8f0eb;
+}
+
+/* ── Sidebar (panel) ── */
+html.light-mode .sidebar {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(0, 0, 0, 0.09);
+  box-shadow: 0 15px 35px -10px rgba(0,0,0,0.1);
+}
+html.light-mode .user-card-mini {
+  border-bottom-color: rgba(0, 0, 0, 0.09);
+}
+html.light-mode .sidebar-nav .nav-item:hover {
+  background: rgba(0, 0, 0, 0.04);
+  color: var(--text-main);
+}
+html.light-mode .sidebar-nav .nav-item.active {
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.12), rgba(8, 145, 178, 0.12));
+  border-color: rgba(5, 150, 105, 0.3);
+  color: #059669;
+  box-shadow: 0 0 15px rgba(5, 150, 105, 0.08);
+}
+
+/* ── Panel content ── */
+html.light-mode .panel-content {
+  background: rgba(255, 255, 255, 0.82);
+  border-color: rgba(0, 0, 0, 0.09);
+  box-shadow: 0 15px 35px -10px rgba(0,0,0,0.1);
+}
+
+/* ── Footer ── */
+html.light-mode footer {
+  background: rgba(226, 232, 226, 0.97);
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+html.light-mode .footer-col h4 {
+  color: #0f172a;
+}
+html.light-mode .footer-col ul a {
+  color: #475569;
+}
+html.light-mode .footer-col ul a:hover {
+  color: #059669;
+}
+html.light-mode .footer-bottom {
+  color: #475569;
+}
+html.light-mode .footer-credits {
+  color: #0891b2;
+}
+html.light-mode .footer-top {
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ── Toast en modo claro ── */
+html.light-mode .toast {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #0f172a;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+}
+
+/* ── Tarjetas de valores / stats / nosotros ── */
+html.light-mode .card-valor,
+html.light-mode .stat-card,
+html.light-mode .glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.09);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+}
+html.light-mode .card-valor:hover,
+html.light-mode .stat-card:hover {
+  background: rgba(255, 255, 255, 0.97);
+  border-color: rgba(5, 150, 105, 0.3);
+}
+
+/* ── Formularios (contacto, login, panel) ── */
+html.light-mode input,
+html.light-mode textarea,
+html.light-mode select {
+  background: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+  color: #0f172a !important;
+}
+html.light-mode input:focus,
+html.light-mode textarea:focus,
+html.light-mode select:focus {
+  border-color: rgba(5, 150, 105, 0.5) !important;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1) !important;
+}
+html.light-mode input::placeholder,
+html.light-mode textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* ── Métricas del panel ── */
+html.light-mode .metric-card,
+html.light-mode .order-card,
+html.light-mode .pedido-card {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.09);
+}
+
+/* ==========================================================================
+   🌙☀️ BOTÓN THEME TOGGLE
+   ========================================================================== */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  cursor: pointer;
+  transition: all 0.3s var(--ease-spring);
+  color: var(--text-secondary);
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  border-color: var(--neon-emerald);
+  box-shadow: 0 0 14px var(--neon-emerald-glow);
+  color: var(--neon-emerald);
+  transform: rotate(15deg) scale(1.08);
+}
+
+.theme-toggle:active {
+  transform: rotate(30deg) scale(0.95);
+}
+
+/* Los dos iconos dentro del botón */
+.theme-toggle .icon-sun,
+.theme-toggle .icon-moon {
+  position: absolute;
+  transition: opacity 0.3s ease, transform 0.4s var(--ease-spring);
+}
+
+/* Dark mode → mostrar sol (para cambiar a claro) */
+.theme-toggle .icon-sun  { opacity: 1;  transform: rotate(0deg)    scale(1); }
+.theme-toggle .icon-moon { opacity: 0;  transform: rotate(-90deg)  scale(0.6); }
+
+/* Light mode → mostrar luna (para cambiar a oscuro) */
+html.light-mode .theme-toggle .icon-sun  { opacity: 0; transform: rotate(90deg) scale(0.6); }
+html.light-mode .theme-toggle .icon-moon { opacity: 1; transform: rotate(0deg)  scale(1); }
+
+/* Transición suave global de tema */
+html.light-mode *,
+html.light-mode *::before,
+html.light-mode *::after {
+  transition: background-color 0.35s ease, border-color 0.35s ease, color 0.25s ease, box-shadow 0.35s ease;
+}
+
 /* Reset y configuraciones globales */
 *, *::before, *::after {
   box-sizing: border-box;

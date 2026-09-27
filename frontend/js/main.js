@@ -5,6 +5,9 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 0. Inicializar Tema (antes de cualquier render para evitar flash)
+  initThemeToggle();
+
   // 1. Inicializar Barra de Progreso de Scroll
   initScrollProgress();
 
@@ -413,3 +416,40 @@ window.showToast = function(message, type = 'success') {
     }, 300);
   }, 4000);
 };
+
+/* ==========================================================================
+   9. THEME TOGGLE — Modo Claro / Oscuro
+   ========================================================================== */
+function initThemeToggle() {
+  const html = document.documentElement;
+
+  // Aplicar preferencia guardada ANTES del primer render (evita flash blanco)
+  const saved = localStorage.getItem('raiz-theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  if (saved === 'light' || (!saved && !prefersDark)) {
+    html.classList.add('light-mode');
+  }
+
+  // Buscar todos los botones .theme-toggle en la página (navbar + drawer)
+  const toggles = document.querySelectorAll('.theme-toggle');
+
+  toggles.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isLight = html.classList.toggle('light-mode');
+      localStorage.setItem('raiz-theme', isLight ? 'light' : 'dark');
+
+      // Actualizar aria-label para accesibilidad
+      const label = isLight ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro';
+      toggles.forEach(b => b.setAttribute('aria-label', label));
+
+      // Toast de confirmación
+      const msg = isLight ? '☀️ Modo claro activado' : '🌙 Modo oscuro activado';
+      if (typeof window.showToast === 'function') window.showToast(msg, 'success');
+    });
+
+    // Aria-label inicial
+    const isCurrentlyLight = html.classList.contains('light-mode');
+    btn.setAttribute('aria-label', isCurrentlyLight ? 'Cambiar a modo oscuro' : 'Cambiar a modo claro');
+  });
+}
