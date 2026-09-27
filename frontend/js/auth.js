@@ -104,6 +104,13 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('usuarioEmail', email);
           }
 
+          // GUARDAR ROL EN LOCALSTORAGE
+          if (data.usuario?.rol) {
+            localStorage.setItem('usuarioRol', data.usuario.rol);
+          } else {
+            localStorage.setItem('usuarioRol', 'consumidor');
+          }
+
           setTimeout(() => {
             window.location.href = 'panel.html';
           }, 600);
@@ -209,6 +216,7 @@ document.addEventListener('DOMContentLoaded', () => {
       localStorage.removeItem('token');
       localStorage.removeItem('usuarioNombre');
       localStorage.removeItem('usuarioEmail');
+      localStorage.removeItem('usuarioRol'); // LIMPIAR ROL
       notify('Has cerrado sesión correctamente.', 'success');
       setTimeout(() => {
         window.location.href = 'login.html';
