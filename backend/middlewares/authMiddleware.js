@@ -1,26 +1,28 @@
 const jwt = require('jsonwebtoken');
 
-// Verificar que el usuario envió un Token válido
+// 1. Validar Token JWT
 exports.verifyToken = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1]; // Formato: "Bearer TOKEN"
 
-    if (!token) return res.status(401).json({ error: 'Acceso denegado. Token no proporcionado.' });
+  if (!token) {
+    return res.status(401).json({ error: 'Acceso denegado: Token no proporcionado' });
+  }
 
-    try {
+  try {
     const verified = jwt.verify(token, process.env.JWT_SECRET || 'secreto_super_seguro');
-    req.usuario = verified; // Contiene id, email, rol, etc.
+    req.usuario = verified; // Guarda los datos decodificados (id, email, rol) en req.usuario
     next();
-    } catch (err) {
-    res.status(400).json({ error: 'Token no válido' });
-    }
+  } catch (error) {
+    return res.status(403).json({ error: 'Token inválido o expirado' });
+  }
 };
 
-// Verificar si el usuario tiene rol de 'admin'
+// 2. Validar que el Rol sea Admin
 exports.verifyAdmin = (req, res, next) => {
-    if (req.usuario && req.usuario.rol === 'admin') {
-    next();
-    } else {
-    return res.status(403).json({ error: 'Acceso denegado: Se requieren permisos de Administrador' });
-    }
+  // Verificar que req.usuario exista y que su rol sea 'admin'
+  if (!req.usuario || req.usuario.rol !== 'admin') {
+    return res.status(403).json({ error: 'Acceso denegado: Requiere permisos de Administrador' });
+  }
+  next();
 };

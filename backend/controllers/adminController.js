@@ -2,13 +2,18 @@ const pool = require('../config/db');
 const bcrypt = require('bcryptjs');
 
 // Obtener todos los usuarios registrados
+
+// backend/controllers/adminController.js
+
 exports.getUsuarios = async (req, res) => {
   try {
-    const result = await pool.query('SELECT id, nombre, email, telefono, direccion, rol, fecha_registro FROM usuarios ORDER BY id DESC');
-    res.json(result.rows);
+    const result = await pool.query(
+      'SELECT id, nombre, email, telefono, direccion, rol, creado_en FROM usuarios ORDER BY id DESC'
+    );
+    return res.json(result.rows);
   } catch (error) {
     console.error('Error al obtener usuarios:', error);
-    res.status(500).json({ error: 'Error del servidor' });
+    return res.status(500).json({ error: 'Error interno del servidor al consultar usuarios' });
   }
 };
 
