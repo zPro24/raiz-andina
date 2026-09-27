@@ -1891,6 +1891,12 @@ main {
   border: 1px solid var(--glass-border);
 }
 
+html.light-mode .table-responsive {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
 .table-custom {
   width: 100%;
   border-collapse: collapse;
@@ -1902,6 +1908,15 @@ main {
 .table-custom td {
   padding: 1rem 1.25rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+html.light-mode .table-custom th {
+  background:rgba(16, 185, 129, 0.1);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .table-custom th {
