@@ -2,6 +2,23 @@ const pool = require('../config/db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const token = jwt.sign(
+  { id: usuario.id, email: usuario.email, rol: usuario.rol },
+  process.env.JWT_SECRET || 'secreto_super_seguro',
+  { expiresIn: '24h' }
+);
+
+return res.json({
+  mensaje: 'Inicio de sesión exitoso',
+  token,
+  usuario: {
+    id: usuario.id,
+    nombre: usuario.nombre,
+    email: usuario.email,
+    rol: usuario.rol
+  }
+});
+
 // Registrar usuario
 exports.register = async (req, res) => {
   const { nombre, email, password } = req.body;
