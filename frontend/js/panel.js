@@ -334,6 +334,8 @@ if (btnCancelarAdmin && formAdminContainer) {
 }
 
 // Enviar formulario para crear un nuevo usuario/admin
+
+
 if (formCrearAdmin) {
   formCrearAdmin.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -344,16 +346,25 @@ if (formCrearAdmin) {
     const rol = document.getElementById('admin-new-rol').value;
     const telefono = document.getElementById('admin-new-telefono').value.trim();
     const direccion = document.getElementById('admin-new-direccion').value.trim();
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      notify('Tu sesión ha expirado. Por favor inicia sesión nuevamente.', 'error');
+      return;
+    }
 
     const submitBtn = formCrearAdmin.querySelector('button[type="submit"]');
-    if (submitBtn) submitBtn.disabled = true;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Guardando...';
+    }
 
     try {
       const res = await fetch('https://backend-web-sz3a.onrender.com/api/admin/usuarios', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ nombre, email, password, rol, telefono, direccion })
       });
@@ -363,9 +374,10 @@ if (formCrearAdmin) {
       if (res.ok) {
         notify('¡Usuario registrado con éxito!', 'success');
         formCrearAdmin.reset();
-        formAdminContainer.style.display = 'none';
+        const container = document.getElementById('form-admin-container');
+        if (container) container.style.display = 'none';
         
-        // Recargar la tabla de usuarios
+        // Recargar la tabla
         if (typeof cargarUsuariosAdmin === 'function') {
           cargarUsuariosAdmin();
         }
@@ -373,11 +385,15 @@ if (formCrearAdmin) {
         notify(data.error || 'No se pudo crear el usuario', 'error');
       }
     } catch (err) {
-      console.error('Error al registrar usuario:', err);
-      notify('Error al conectar con el servidor', 'error');
+      console.error('Error detallado de la petición:', err);
+      notify('No se pudo conectar con el servidor de Render. Revisa la consola (F12).', 'error');
     } finally {
-      if (submitBtn) submitBtn.disabled = false;
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Guardar Usuario';
+      }
     }
   });
 }
+
 });
