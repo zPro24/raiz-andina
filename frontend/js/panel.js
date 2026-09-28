@@ -3,6 +3,8 @@
  * Integrado con API en Render: https://backend-web-sz3a.onrender.com/api
  */
 
+const API_URL_BASE = 'https://backend-web-sz3a.onrender.com';
+
 document.addEventListener('DOMContentLoaded', () => {
   const API_AUTH_URL = 'https://backend-web-sz3a.onrender.com/api/auth';
   const API_ADMIN_URL = 'https://backend-web-sz3a.onrender.com/api/admin';
@@ -473,6 +475,10 @@ if (formCrearProducto) {
   });
 }
 
+
+  
+});
+
   async function cargarMisPedidos() {
     const tbody = document.getElementById('tabla-pedidos-body');
     const mobileList = document.getElementById('pedidos-mobile-list');
@@ -606,5 +612,3 @@ if (formCrearProducto) {
       });
     });
   });
-  
-});
