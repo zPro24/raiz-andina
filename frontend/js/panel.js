@@ -473,100 +473,106 @@ if (formCrearProducto) {
   });
 }
 
-  // Función para obtener y renderizar los pedidos desde PostgreSQL
   async function cargarMisPedidos() {
     const tbody = document.getElementById('tabla-pedidos-body');
     const mobileList = document.getElementById('pedidos-mobile-list');
     const token = localStorage.getItem('token');
 
-    if (!tbody || !token) return;
+    console.log('🔍 Iniciando cargarMisPedidos...');
+
+    if (!tbody) {
+      console.warn('⚠️ No se encontró el elemento #tabla-pedidos-body en el DOM.');
+      return;
+    }
+
+    if (!token) {
+      console.error('❌ No se encontró el token de autenticación en localStorage.');
+      tbody.innerHTML = `
+      <tr>
+        <td colspan="5" style="text-align: center; color: #f87171; padding: 2rem;">
+          Debes iniciar sesión para ver tus pedidos.
+        </td>
+      </tr>`;
+      return;
+    }
 
     try {
-      const res = await fetch('https://backend-web-sz3a.onrender.com/api/ordenes/mis-pedidos', {
+      const res = await fetch(`${API_URL_BASE}/api/ordenes/mis-pedidos`, {
+        method: 'GET',
         headers: {
+          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         }
       });
 
+      console.log('📡 Respuesta del servidor status:', res.status);
+
       if (!res.ok) {
-        throw new Error(`Error en servidor: ${res.status}`);
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || `Error ${res.status}`);
       }
 
       const pedidos = await res.json();
+      console.log('📦 Pedidos recibidos:', pedidos);
 
-      // Si el usuario no tiene pedidos registrados
-      if (pedidos.length === 0) {
-        const mensajeVacio = `
+      if (!pedidos || pedidos.length === 0) {
+        const msjVacio = `
         <tr>
           <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">
             No has realizado ningún pedido aún. 🌾
           </td>
         </tr>`;
-        tbody.innerHTML = mensajeVacio;
-
-        if (mobileList) {
-          mobileList.innerHTML = `
-          <div style="text-align: center; color: var(--text-muted); padding: 2rem;">
-            No has realizado ningún pedido aún. 🌾
-          </div>`;
-        }
+        tbody.innerHTML = msjVacio;
+        if (mobileList) mobileList.innerHTML = `<p style="text-align: center; color: var(--text-muted); padding: 1.5rem;">No has realizado ningún pedido aún. 🌾</p>`;
         return;
       }
 
-      // 1. Dibujar Vista de Escritorio (Tabla)
+      // Renderizar filas para Escritorio
       tbody.innerHTML = pedidos.map(p => {
-        const fecha = new Date(p.fecha_creacion).toLocaleDateString('es-CO', {
-          day: '2-digit', month: 'short', year: 'numeric'
-        });
+        const fecha = p.fecha_creacion
+          ? new Date(p.fecha_creacion).toLocaleDateString('es-CO', { day: '2-digit', month: 'short', year: 'numeric' })
+          : 'S/F';
 
-        // Crear lista de productos con cantidad
-        const listaProductos = p.detalles.map(d => `${d.cantidad}x ${d.producto_nombre}`).join(', ');
+        const detallesArray = Array.isArray(p.detalles) ? p.detalles : [];
+        const listaProductos = detallesArray.map(d => `${d.cantidad}x ${d.producto_nombre || 'Producto'}`).join(', ');
 
-        // Asignar clase de badge según el estado de PostgreSQL
-        let badgeClass = 'badge-warning';
-        if (p.estado.toLowerCase().includes('entregado') || p.estado.toLowerCase().includes('completado')) {
-          badgeClass = 'badge-success';
-        }
+        const badgeClass = (p.estado || '').toLowerCase().includes('entregado') ? 'badge-success' : 'badge-warning';
 
         return `
         <tr>
           <td style="font-family: var(--font-mono); color: #38bdf8; font-weight: 600;">#RA-${p.id}</td>
           <td style="color: var(--text-secondary);">${fecha}</td>
           <td>${listaProductos}</td>
-          <td style="font-weight: 700; color: #fbbf24;">$${Number(p.total).toLocaleString('es-CO')} COP</td>
-          <td><span class="badge ${badgeClass}">${p.estado}</span></td>
+          <td style="font-weight: 700; color: #fbbf24;">$${Number(p.total || 0).toLocaleString('es-CO')} COP</td>
+          <td><span class="badge ${badgeClass}">${p.estado || 'En proceso'}</span></td>
         </tr>
       `;
       }).join('');
 
-      // 2. Dibujar Vista Móvil (Tarjetas)
+      // Renderizar Tarjetas para Móvil
       if (mobileList) {
         mobileList.innerHTML = pedidos.map(p => {
-          const fecha = new Date(p.fecha_creacion).toLocaleDateString('es-CO', {
-            day: '2-digit', month: 'short', year: 'numeric'
-          });
+          const fecha = p.fecha_creacion
+            ? new Date(p.fecha_creacion).toLocaleDateString('es-CO', { day: '2-digit', month: 'short', year: 'numeric' })
+            : 'S/F';
 
-          const listaProductos = p.detalles.map(d => `${d.cantidad}x ${d.producto_nombre}`).join('<br>');
-
-          let badgeClass = 'badge-warning';
-          if (p.estado.toLowerCase().includes('entregado') || p.estado.toLowerCase().includes('completado')) {
-            badgeClass = 'badge-success';
-          }
+          const detallesArray = Array.isArray(p.detalles) ? p.detalles : [];
+          const listaProductos = detallesArray.map(d => `${d.cantidad}x ${d.producto_nombre || 'Producto'}`).join('<br>');
+          const badgeClass = (p.estado || '').toLowerCase().includes('entregado') ? 'badge-success' : 'badge-warning';
 
           return `
           <div class="order-mobile-card">
             <div class="order-mobile-header">
               <span class="order-mobile-id">#RA-${p.id}</span>
-              <span class="badge ${badgeClass}">${p.estado}</span>
+              <span class="badge ${badgeClass}">${p.estado || 'En proceso'}</span>
             </div>
             <div class="order-mobile-body">
               <p style="font-weight: 600; color: var(--text-main); margin-bottom: 0.3rem;">${listaProductos}</p>
               <span class="order-mobile-date">Fecha: ${fecha}</span>
-              <span class="order-mobile-date" style="display: block;">Envío: ${p.direccion_envio || 'No especificada'}</span>
             </div>
             <div class="order-mobile-footer">
               <span style="font-size: 0.75rem; color: var(--text-muted);">Total pagado:</span>
-              <span class="order-mobile-total">$${Number(p.total).toLocaleString('es-CO')} COP</span>
+              <span class="order-mobile-total">$${Number(p.total || 0).toLocaleString('es-CO')} COP</span>
             </div>
           </div>
         `;
@@ -574,25 +580,31 @@ if (formCrearProducto) {
       }
 
     } catch (error) {
-      console.error('Error al cargar pedidos:', error);
+      console.error('❌ Error al cargar pedidos:', error);
       tbody.innerHTML = `
       <tr>
         <td colspan="5" style="text-align: center; color: #ef4444; padding: 2rem;">
-          Error al cargar tus pedidos.
+          ${error.message || 'Error al conectar con el servidor.'}
         </td>
       </tr>`;
     }
   }
 
-  // Ejecutar la carga al iniciar o al hacer clic en la pestaña "Mis Pedidos"
+  // Escuchar evento DOMContentLoaded y clicks en la pestaña
   document.addEventListener('DOMContentLoaded', () => {
+    // Cargar de inmediato
     cargarMisPedidos();
 
-    // Escuchar el cambio de pestañas en el sidebar de panel.html
-    const btnTabPedidos = document.querySelector('[data-tab="tab-pedidos"]');
-    if (btnTabPedidos) {
-      btnTabPedidos.addEventListener('click', cargarMisPedidos);
-    }
+    // O ejecutar al hacer clic en la pestaña "Mis Pedidos"
+    const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
+    navItems.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabTarget = btn.getAttribute('data-tab');
+        if (tabTarget === 'tab-pedidos') {
+          cargarMisPedidos();
+        }
+      });
+    });
   });
-
+  
 });
