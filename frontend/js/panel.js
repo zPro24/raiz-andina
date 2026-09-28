@@ -52,6 +52,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  const navProducto = document.getElementById('nav-item-producto');
+  if (usuarioRol === 'admin') {
+    if (navProducto) navProducto.style.display = 'flex';
+    if (badgeRol) {
+      badgeRol.textContent = '📦 Agregar Producto';
+      badgeRol.style.background = 'rgba(6, 182, 212, 0.15)';
+      badgeRol.style.borderColor = 'rgba(6, 182, 212, 0.35)';
+      badgeRol.style.color = '#38bdf8';
+    }
+  }
+
   // 3. Lógica de Pestañas (Tabs) del Sidebar
   const navItems = document.querySelectorAll('.sidebar-nav .nav-item');
   const tabContents = document.querySelectorAll('.tab-content');
