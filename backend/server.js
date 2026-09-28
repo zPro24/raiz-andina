@@ -36,4 +36,5 @@ app.use('/api/admin', adminRoutes);
 const productoRoutes = require('./routes/productoRoutes');
 app.use('/api/productos', productoRoutes);
 
+app.use(express.json()); // 👈 Vital para que req.body funcione
 app.use('/api/ordenes', require('./routes/ordenesRoutes'));

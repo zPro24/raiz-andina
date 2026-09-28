@@ -84,3 +84,10 @@ exports.getMisPedidos = async (req, res) => {
     res.status(500).json({ error: 'Error al consultar el historial de pedidos.' });
   }
 };
+
+// Si tu middleware guarda el usuario en req.usuario o req.user:
+const usuario_id = req.user?.id || req.usuario?.id;
+
+if (!usuario_id) {
+  return res.status(401).json({ error: 'Usuario no identificado en la sesión.' });
+}
