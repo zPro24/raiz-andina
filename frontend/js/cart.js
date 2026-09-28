@@ -200,13 +200,20 @@ async function procesarCompra() {
   const token = localStorage.getItem('token');
 
   if (carrito.length === 0) {
-    notify('Tu cesta está vacía.');
+    alert('Tu cesta está vacía.');
     return;
   }
 
   if (!token) {
-    notify('Debes iniciar sesión para realizar el pedido.');
+    alert('Debes iniciar sesión para realizar el pedido.');
     window.location.href = 'login.html';
+    return;
+  }
+
+  // Pedir dirección de envío al usuario
+  const direccion_envio = prompt('Ingresa la dirección de envío para tu pedido:');
+  if (!direccion_envio || direccion_envio.trim() === '') {
+    alert('Debes proporcionar una dirección de envío para completar el pedido.');
     return;
   }
 
@@ -220,22 +227,25 @@ async function procesarCompra() {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify({ items: carrito })
+      body: JSON.stringify({
+        items: carrito,
+        direccion_envio: direccion_envio.trim()
+      })
     });
 
     const data = await res.json();
 
     if (res.ok) {
-      notify('¡Pedido registrado con éxito!');
+      alert('¡Pedido realizado con éxito!');
       localStorage.removeItem('carrito_raiz_andina');
       actualizarContadorCarrito();
       window.location.href = 'panel.html';
     } else {
-      notify(data.error || 'No se pudo procesar la compra.');
+      alert(data.error || 'No se pudo procesar la compra.');
     }
   } catch (err) {
     console.error('Error procesando compra:', err);
-    notify('Error al conectar con el servidor.');
+    alert('Error al conectar con el servidor.');
   } finally {
     if (btn) btn.disabled = false;
   }

@@ -35,3 +35,5 @@ app.use('/api/admin', adminRoutes);
 
 const productoRoutes = require('./routes/productoRoutes');
 app.use('/api/productos', productoRoutes);
+
+app.use('/api/ordenes', require('./routes/ordenesRoutes'));

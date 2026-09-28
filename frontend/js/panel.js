@@ -473,4 +473,62 @@ if (formCrearProducto) {
   });
 }
 
+  async function cargarMisPedidos() {
+    const contenedor = document.getElementById('contenedor-mis-pedidos');
+    if (!contenedor) return;
+
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+      const res = await fetch('https://backend-web-sz3a.onrender.com/api/ordenes/mis-pedidos', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (!res.ok) throw new Error('Error al consultar el servidor');
+
+      const pedidos = await res.json();
+
+      if (pedidos.length === 0) {
+        contenedor.innerHTML = '<p style="color: var(--text-muted);">No has realizado ningún pedido aún.</p>';
+        return;
+      }
+
+      contenedor.innerHTML = pedidos.map(p => `
+      <div style="border: 1px solid var(--glass-border); padding: 1.2rem; border-radius: 8px; margin-bottom: 1rem; background: rgba(255,255,255,0.02);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+          <strong style="color: #10b981; font-size: 1.05rem;">Pedido #${p.id}</strong>
+          <span style="background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">${p.estado}</span>
+        </div>
+
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">
+          📅 <strong>Fecha:</strong> ${new Date(p.fecha_creacion).toLocaleString('es-CO')}
+        </p>
+        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+          📍 <strong>Envío a:</strong> ${p.direccion_envio}
+        </p>
+
+        <div style="border-top: 1px dashed var(--glass-border); padding-top: 0.5rem; margin-top: 0.5rem;">
+          <strong style="font-size: 0.85rem; color: var(--text-secondary);">Productos:</strong>
+          <ul style="margin: 0.4rem 0; padding-left: 1.2rem; font-size: 0.9rem;">
+            ${p.detalles.map(d => `
+              <li>${d.producto_nombre} × ${d.cantidad} — <strong>$${Number(d.precio_unitario).toLocaleString('es-CO')} COP</strong> c/u</li>
+            `).join('')}
+          </ul>
+        </div>
+
+        <div style="text-align: right; margin-top: 0.5rem; font-size: 1.1rem; font-weight: bold;">
+          Total: <span style="color: #10b981;">$${Number(p.total).toLocaleString('es-CO')} COP</span>
+        </div>
+      </div>
+    `).join('');
+
+    } catch (err) {
+      console.error('Error al cargar mis pedidos:', err);
+      contenedor.innerHTML = '<p style="color: #ef4444;">Error cargando el historial de pedidos.</p>';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', cargarMisPedidos);
+
 });
