@@ -473,62 +473,126 @@ if (formCrearProducto) {
   });
 }
 
+  // Función para obtener y renderizar los pedidos desde PostgreSQL
   async function cargarMisPedidos() {
-    const contenedor = document.getElementById('contenedor-mis-pedidos');
-    if (!contenedor) return;
-
+    const tbody = document.getElementById('tabla-pedidos-body');
+    const mobileList = document.getElementById('pedidos-mobile-list');
     const token = localStorage.getItem('token');
-    if (!token) return;
+
+    if (!tbody || !token) return;
 
     try {
       const res = await fetch('https://backend-web-sz3a.onrender.com/api/ordenes/mis-pedidos', {
-        headers: { 'Authorization': `Bearer ${token}` }
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
       });
 
-      if (!res.ok) throw new Error('Error al consultar el servidor');
+      if (!res.ok) {
+        throw new Error(`Error en servidor: ${res.status}`);
+      }
 
       const pedidos = await res.json();
 
+      // Si el usuario no tiene pedidos registrados
       if (pedidos.length === 0) {
-        contenedor.innerHTML = '<p style="color: var(--text-muted);">No has realizado ningún pedido aún.</p>';
+        const mensajeVacio = `
+        <tr>
+          <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 2rem;">
+            No has realizado ningún pedido aún. 🌾
+          </td>
+        </tr>`;
+        tbody.innerHTML = mensajeVacio;
+
+        if (mobileList) {
+          mobileList.innerHTML = `
+          <div style="text-align: center; color: var(--text-muted); padding: 2rem;">
+            No has realizado ningún pedido aún. 🌾
+          </div>`;
+        }
         return;
       }
 
-      contenedor.innerHTML = pedidos.map(p => `
-      <div style="border: 1px solid var(--glass-border); padding: 1.2rem; border-radius: 8px; margin-bottom: 1rem; background: rgba(255,255,255,0.02);">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-          <strong style="color: #10b981; font-size: 1.05rem;">Pedido #${p.id}</strong>
-          <span style="background: rgba(16, 185, 129, 0.15); color: #10b981; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase;">${p.estado}</span>
-        </div>
+      // 1. Dibujar Vista de Escritorio (Tabla)
+      tbody.innerHTML = pedidos.map(p => {
+        const fecha = new Date(p.fecha_creacion).toLocaleDateString('es-CO', {
+          day: '2-digit', month: 'short', year: 'numeric'
+        });
 
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.25rem;">
-          📅 <strong>Fecha:</strong> ${new Date(p.fecha_creacion).toLocaleString('es-CO')}
-        </p>
-        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
-          📍 <strong>Envío a:</strong> ${p.direccion_envio}
-        </p>
+        // Crear lista de productos con cantidad
+        const listaProductos = p.detalles.map(d => `${d.cantidad}x ${d.producto_nombre}`).join(', ');
 
-        <div style="border-top: 1px dashed var(--glass-border); padding-top: 0.5rem; margin-top: 0.5rem;">
-          <strong style="font-size: 0.85rem; color: var(--text-secondary);">Productos:</strong>
-          <ul style="margin: 0.4rem 0; padding-left: 1.2rem; font-size: 0.9rem;">
-            ${p.detalles.map(d => `
-              <li>${d.producto_nombre} × ${d.cantidad} — <strong>$${Number(d.precio_unitario).toLocaleString('es-CO')} COP</strong> c/u</li>
-            `).join('')}
-          </ul>
-        </div>
+        // Asignar clase de badge según el estado de PostgreSQL
+        let badgeClass = 'badge-warning';
+        if (p.estado.toLowerCase().includes('entregado') || p.estado.toLowerCase().includes('completado')) {
+          badgeClass = 'badge-success';
+        }
 
-        <div style="text-align: right; margin-top: 0.5rem; font-size: 1.1rem; font-weight: bold;">
-          Total: <span style="color: #10b981;">$${Number(p.total).toLocaleString('es-CO')} COP</span>
-        </div>
-      </div>
-    `).join('');
+        return `
+        <tr>
+          <td style="font-family: var(--font-mono); color: #38bdf8; font-weight: 600;">#RA-${p.id}</td>
+          <td style="color: var(--text-secondary);">${fecha}</td>
+          <td>${listaProductos}</td>
+          <td style="font-weight: 700; color: #fbbf24;">$${Number(p.total).toLocaleString('es-CO')} COP</td>
+          <td><span class="badge ${badgeClass}">${p.estado}</span></td>
+        </tr>
+      `;
+      }).join('');
 
-    } catch (err) {
-      console.error('Error al cargar mis pedidos:', err);
-      contenedor.innerHTML = '<p style="color: #ef4444;">Error cargando el historial de pedidos.</p>';
+      // 2. Dibujar Vista Móvil (Tarjetas)
+      if (mobileList) {
+        mobileList.innerHTML = pedidos.map(p => {
+          const fecha = new Date(p.fecha_creacion).toLocaleDateString('es-CO', {
+            day: '2-digit', month: 'short', year: 'numeric'
+          });
+
+          const listaProductos = p.detalles.map(d => `${d.cantidad}x ${d.producto_nombre}`).join('<br>');
+
+          let badgeClass = 'badge-warning';
+          if (p.estado.toLowerCase().includes('entregado') || p.estado.toLowerCase().includes('completado')) {
+            badgeClass = 'badge-success';
+          }
+
+          return `
+          <div class="order-mobile-card">
+            <div class="order-mobile-header">
+              <span class="order-mobile-id">#RA-${p.id}</span>
+              <span class="badge ${badgeClass}">${p.estado}</span>
+            </div>
+            <div class="order-mobile-body">
+              <p style="font-weight: 600; color: var(--text-main); margin-bottom: 0.3rem;">${listaProductos}</p>
+              <span class="order-mobile-date">Fecha: ${fecha}</span>
+              <span class="order-mobile-date" style="display: block;">Envío: ${p.direccion_envio || 'No especificada'}</span>
+            </div>
+            <div class="order-mobile-footer">
+              <span style="font-size: 0.75rem; color: var(--text-muted);">Total pagado:</span>
+              <span class="order-mobile-total">$${Number(p.total).toLocaleString('es-CO')} COP</span>
+            </div>
+          </div>
+        `;
+        }).join('');
+      }
+
+    } catch (error) {
+      console.error('Error al cargar pedidos:', error);
+      tbody.innerHTML = `
+      <tr>
+        <td colspan="5" style="text-align: center; color: #ef4444; padding: 2rem;">
+          Error al cargar tus pedidos.
+        </td>
+      </tr>`;
     }
   }
 
-  document.addEventListener('DOMContentLoaded', cargarMisPedidos);
+  // Ejecutar la carga al iniciar o al hacer clic en la pestaña "Mis Pedidos"
+  document.addEventListener('DOMContentLoaded', () => {
+    cargarMisPedidos();
+
+    // Escuchar el cambio de pestañas en el sidebar de panel.html
+    const btnTabPedidos = document.querySelector('[data-tab="tab-pedidos"]');
+    if (btnTabPedidos) {
+      btnTabPedidos.addEventListener('click', cargarMisPedidos);
+    }
+  });
 
 });
