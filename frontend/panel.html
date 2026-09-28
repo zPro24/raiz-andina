@@ -183,7 +183,7 @@
             <span>Mi Perfil</span>
           </button>
           <button type="button" class="nav-item" data-tab="tab-pedidos">
-            <span class="icon">📦</span>
+            <span class="icon">📝</span>
             <span>Mis Pedidos</span>
           </button>
           <button type="button" class="nav-item" data-tab="tab-favoritos">
@@ -194,11 +194,15 @@
             <span class="icon">🔒</span>
             <span>Seguridad</span>
           </button>
-
           <!-- Botón exclusivo para Administradores -->
           <button type="button" id="nav-item-admin" class="nav-item" data-tab="tab-admin" style="display: none">
             <span class="icon">👑</span>
             <span>Gestión Usuarios</span>
+          </button>
+          <!-- Boton para agregar productos y cosechas (solo admins) -->
+          <button type="button" id="nav-item-admin" class="nav-item" data-tab="form-producto-container" style="display: none">
+            <span class="icon">📦</span>
+            <span>Agregar Producto</span>
           </button>
         </nav>
       </aside>
@@ -527,6 +531,58 @@
           <div id="admin-mobile-list" class="orders-mobile-list" style="margin-top: 1.25rem;">
             <!-- Se generará dinámicamente -->
           </div>
+        </div>
+
+        <!-- Formulario para Agregar Nuevo Producto -->
+        <div id="form-producto-container" class="tab-content">
+          <h3 style="font-size: 1.1rem; color: #38bdf8; margin-bottom: 1rem;">➕ Registrar Nuevo Producto</h3>
+          <form id="form-crear-producto" class="form-container">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+          
+              <div class="form-group">
+                <label for="prod-nombre">Nombre del Producto *</label>
+                <input type="text" id="prod-nombre" required placeholder="Ej: Café de Origen Especial">
+              </div>
+          
+              <div class="form-group">
+                <label for="prod-precio">Precio (COP) *</label>
+                <input type="number" id="prod-precio" required placeholder="32000" min="0">
+              </div>
+          
+              <div class="form-group">
+                <label for="prod-categoria">Categoría *</label>
+                <select id="prod-categoria"
+                  style="width: 100%; padding: 0.75rem; background: rgba(6, 9, 14, 0.8); border: 1px solid var(--glass-border); border-radius: 8px; color: var(--text-main);">
+                  <option value="cafe">Café Especial</option>
+                  <option value="cacao">Cacao Orgánico</option>
+                  <option value="miel">Miel de Abejas</option>
+                  <option value="general">General</option>
+                </select>
+              </div>
+          
+              <div class="form-group">
+                <label for="prod-stock">Stock Disponible</label>
+                <input type="number" id="prod-stock" value="10" min="0">
+              </div>
+          
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <label for="prod-imagen">URL de la Imagen</label>
+                <input type="url" id="prod-imagen" placeholder="https://ejemplo.com/imagen.jpg">
+              </div>
+          
+              <div class="form-group" style="grid-column: 1 / -1;">
+                <label for="prod-descripcion">Descripción del Producto</label>
+                <textarea id="prod-descripcion" rows="3" placeholder="Notas de cata, origen, msnm, etc."></textarea>
+              </div>
+          
+            </div>
+          
+            <div style="margin-top: 1.25rem;">
+              <button type="submit" class="btn-primary" style="padding: 0.6rem 1.5rem;">
+                Guardar Producto
+              </button>
+            </div>
+          </form>
         </div>
 
       </section>

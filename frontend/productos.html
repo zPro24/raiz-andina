@@ -60,6 +60,19 @@
       </ul>
 
       <div class="nav-right">
+
+        <a href="carrito.html" class="theme-toggle"
+          style="position: relative; display: flex; align-items: center; color: var(--text-main); text-decoration: none; padding: 0.5rem; margin-right: 0.5rem;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span id="cart-badge"
+            style="display: none; position: absolute; top: 0; right: 0; background: #10b981; color: #06090e; font-size: 0.7rem; font-weight: bold; border-radius: 50%; padding: 0.1rem 0.4rem;">0</span>
+        </a>
+
         <a href="login.html" class="btn-login-nav">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -179,170 +192,11 @@
     </div>
 
     <!-- Retícula de Productos Asimétrica -->
-    <div class="grid-productos reveal-on-scroll delay-100">
-
-      <!-- PRODUCTO 1: DESTACADO ASIMÉTRICO (Café de Origen Especial) -->
-      <div class="card-producto destacado" data-category="cafe">
-        <span class="destacado-badge">★ Cosecha Insignia</span>
-
-        <div class="producto-img-box">
-          <img src="./assets/img/cafe.jpeg" alt="Café de Origen Especial Santander">
-        </div>
-
-        <div class="producto-info">
-          <div>
-            <div class="producto-origen">
-              <span>⛰️ Santander · 1.700 msnm</span>
-              <span>· Lote #RA-102</span>
-            </div>
-            <h2 style="font-size: 1.6rem; margin-bottom: 0.5rem;">Café de Origen Especial</h2>
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.6;">
-              Café Arábica lavado de perfil dulce y balanceado. Notas aromáticas a caña de azúcar, frutos amarillos y chocolate oscuro. Tostado semanal en origen para garantizar máxima frescura.
-            </p>
-
-            <div class="producto-tags">
-              <span class="tag-badge">Puntaje SCA 87+</span>
-              <span class="tag-badge">Variedad Castillo / Caturra</span>
-              <span class="tag-badge">Tostión Media</span>
-            </div>
-          </div>
-
-          <div class="producto-bottom">
-            <div>
-              <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Precio por libra (500g)</span>
-              <div class="precio">$32.000 COP</div>
-            </div>
-            <button class="btn-comprar" onclick="handleAddToCart('Café de Origen Especial')">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              <span>Añadir a la orden</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- PRODUCTO 2: Cacao Orgánico -->
-      <div class="card-producto" data-category="cacao">
-        <div class="producto-img-box">
-          <img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?auto=format&fit=crop&w=700&q=80" alt="Cacao Orgánico Zapatoca">
-        </div>
-
-        <div class="producto-info">
-          <div>
-            <div class="producto-origen">
-              <span>📍 Zapatoca, Santander</span>
-              <span>· 100% Puro</span>
-            </div>
-            <h3 style="margin-bottom: 0.4rem;">Cacao Orgánico Fino</h3>
-            <p style="font-size: 0.875rem; color: var(--text-secondary);">
-              Pasta y nibs de cacao puro cultivado agroecológicamente. Notas florales silvestres y potente concentración de antioxidantes naturales.
-            </p>
-
-            <div class="producto-tags">
-              <span class="tag-badge">75% Pureza</span>
-              <span class="tag-badge">Sin Azúcar</span>
-            </div>
-          </div>
-
-          <div class="producto-bottom">
-            <div>
-              <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Presentación 250g</span>
-              <div class="precio">$18.000 COP</div>
-            </div>
-            <button class="btn-comprar" onclick="handleAddToCart('Cacao Orgánico Fino')">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              <span>Pedir</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- PRODUCTO 3: Miel Multifloral -->
-      <div class="card-producto" data-category="miel">
-        <div class="producto-img-box">
-          <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=700&q=80" alt="Miel Multifloral de Alta Montaña">
-        </div>
-
-        <div class="producto-info">
-          <div>
-            <div class="producto-origen">
-              <span>🐝 Cordillera Oriental</span>
-              <span>· Cruda & Pura</span>
-            </div>
-            <h3 style="margin-bottom: 0.4rem;">Miel Multifloral de Montaña</h3>
-            <p style="font-size: 0.875rem; color: var(--text-secondary);">
-              Miel pura de abejas alimentadas exclusivamente con néctar de flores nativas del bosque andino. Sin procesos térmicos ni aditivos.
-            </p>
-
-            <div class="producto-tags">
-              <span class="tag-badge">Cruda 100%</span>
-              <span class="tag-badge">Apicultura Sostenible</span>
-            </div>
-          </div>
-
-          <div class="producto-bottom">
-            <div>
-              <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Envase de vidrio 375ml</span>
-              <div class="precio">$22.000 COP</div>
-            </div>
-            <button class="btn-comprar" onclick="handleAddToCart('Miel Multifloral de Montaña')">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              <span>Pedir</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- PRODUCTO 4: Café Geisha Edición Limitada -->
-      <div class="card-producto" data-category="cafe">
-        <div class="producto-img-box">
-          <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=700&q=80" alt="Café Geisha Andino">
-        </div>
-
-        <div class="producto-info">
-          <div>
-            <div class="producto-origen">
-              <span>⛰️ Mesa de los Santos · 1.850 msnm</span>
-            </div>
-            <h3 style="margin-bottom: 0.4rem;">Café Geisha Reserva</h3>
-            <p style="font-size: 0.875rem; color: var(--text-secondary);">
-              Proceso natural anaeróbico de 72 horas. Explosión de notas a jazmín, durazno maduro y bergamota con acidez brillante y sedosa.
-            </p>
-
-            <div class="producto-tags">
-              <span class="tag-badge">SCA 89+</span>
-              <span class="tag-badge">Microlote Exclusivo</span>
-            </div>
-          </div>
-
-          <div class="producto-bottom">
-            <div>
-              <span style="font-size: 0.75rem; color: var(--text-muted); display: block;">Edición numerada (340g)</span>
-              <div class="precio">$48.000 COP</div>
-            </div>
-            <button class="btn-comprar" onclick="handleAddToCart('Café Geisha Reserva')">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <circle cx="9" cy="21" r="1"></circle>
-                <circle cx="20" cy="21" r="1"></circle>
-                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-              </svg>
-              <span>Pedir</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
+    <!-- Retícula de Productos Dinámica -->
+    <div id="grid-productos" class="grid-productos reveal-on-scroll delay-100">
+      <p style="grid-column: 1 / -1; text-align: center; color: var(--text-muted); padding: 3rem;">
+        Cargando cosechas y productos desde la base de datos... 🌿
+      </p>
     </div>
   </main>
 
@@ -399,7 +253,9 @@
   </footer>
 
   <script src="js/main.js"></script>
-  <script>
+  <script src="js/cart.js"></script>
+  <script src="js/productos.js"></script>
+  <!-- <script>
     function handleAddToCart(productName) {
       if (typeof window.showToast === 'function') {
         window.showToast(`¡"${productName}" añadido a tu orden! Redirigiendo a tu cuenta...`, 'success');
@@ -410,6 +266,6 @@
         window.location.href = 'panel.html';
       }, 1200);
     }
-  </script>
+  </script> -->
 </body>
 </html>

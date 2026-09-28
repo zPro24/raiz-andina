@@ -1,0 +1,47 @@
+function renderizarCarrito() {
+  const contenedor = document.getElementById('items-carrito-container');
+  const totalElemento = document.getElementById('cart-total-precio');
+  const carrito = obtenerCarrito();
+
+  if (!contenedor) return;
+
+  if (carrito.length === 0) {
+    contenedor.innerHTML = `
+      <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+        <p>Tu cesta está vacía 🌾</p>
+      </div>
+    `;
+    if (totalElemento) totalElemento.textContent = '$0';
+    return;
+  }
+
+  let totalAcumulado = 0;
+
+  contenedor.innerHTML = carrito.map(item => {
+    const subtotal = item.precio * item.cantidad;
+    totalAcumulado += subtotal;
+
+    return `
+      <div class="cart-item" style="display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid var(--glass-border);">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <img src="${item.imagen || 'placeholder.jpg'}" alt="${item.nombre}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 8px;">
+          <div>
+            <h4 style="margin: 0; font-size: 0.95rem;">${item.nombre}</h4>
+            <span style="color: var(--text-muted); font-size: 0.85rem;">$${item.precio.toLocaleString('es-CO')} c/u</span>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <button onclick="cambiarCantidadProducto(${item.id}, ${item.cantidad - 1})" style="padding: 0.2rem 0.5rem;">-</button>
+          <span>${item.cantidad}</span>
+          <button onclick="cambiarCantidadProducto(${item.id}, ${item.cantidad + 1})" style="padding: 0.2rem 0.5rem;">+</button>
+          <button onclick="eliminarDelCarrito(${item.id})" style="background: transparent; color: #ef4444; border: none; cursor: pointer; margin-left: 0.5rem;">🗑️</button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  if (totalElemento) {
+    totalElemento.textContent = `$${totalAcumulado.toLocaleString('es-CO')}`;
+  }
+}

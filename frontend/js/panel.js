@@ -396,4 +396,70 @@ if (formCrearAdmin) {
     }
     });
   }
+
+// Enviar formulario para crear un nuevo producto
+const formCrearProducto = document.getElementById('form-crear-producto');
+
+if (formCrearProducto) {
+  formCrearProducto.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const nombre = document.getElementById('prod-nombre').value.trim();
+    const precio = parseFloat(document.getElementById('prod-precio').value);
+    const categoria = document.getElementById('prod-categoria').value;
+    const stock = parseInt(document.getElementById('prod-stock').value) || 0;
+    const imagen_url = document.getElementById('prod-imagen').value.trim();
+    const descripcion = document.getElementById('prod-descripcion').value.trim();
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      notify('Sesión no válida. Por favor inicia sesión nuevamente.', 'error');
+      return;
+    }
+
+    const submitBtn = formCrearProducto.querySelector('button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    try {
+      const res = await fetch('https://backend-web-sz3a.onrender.com/api/productos', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          nombre,
+          precio,
+          categoria,
+          stock,
+          imagen_url,
+          descripcion
+        })
+      });
+
+      const contentType = res.headers.get('content-type');
+      if (!contentType || !contentType.includes('application/json')) {
+        const errorText = await res.text();
+        console.error('El servidor no devolvió JSON:', errorText);
+        notify('Error en la respuesta del servidor.', 'error');
+        return;
+      }
+
+      const data = await res.json();
+
+      if (res.ok) {
+        notify('¡Producto registrado correctamente!', 'success');
+        formCrearProducto.reset();
+      } else {
+        notify(data.error || 'No se pudo registrar el producto.', 'error');
+      }
+    } catch (err) {
+      console.error('Error al guardar el producto:', err);
+      notify('Error de conexión con el servidor.', 'error');
+    } finally {
+      if (submitBtn) submitBtn.disabled = false;
+    }
+  });
+}
+
 });
