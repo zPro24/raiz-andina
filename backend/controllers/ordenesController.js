@@ -2,8 +2,13 @@ const pool = require('../config/db');
 
 // Crear un nuevo pedido
 exports.crearOrden = async (req, res) => {
-  const usuario_id = req.user.id;
+  // 💡 Usamos req.usuario porque así lo asigna tu verifyToken
+  const usuario_id = req.usuario ? (req.usuario.id || req.usuario.id_usuario) : null;
   const { items, direccion_envio } = req.body;
+
+  if (!usuario_id) {
+    return res.status(401).json({ error: 'Usuario no autenticado en la sesión.' });
+  }
 
   if (!items || !Array.isArray(items) || items.length === 0) {
     return res.status(400).json({ error: 'El carrito no contiene productos.' });
@@ -14,17 +19,17 @@ exports.crearOrden = async (req, res) => {
   try {
     await client.query('BEGIN');
 
-    // 1. Obtener la dirección si no se envió explícitamente desde el frontend
+    // 1. Si no enviaron dirección desde el frontend, la buscamos en la tabla 'usuarios'
     let direccionFinal = direccion_envio;
-    if (!direccionFinal) {
+    if (!direccionFinal || direccionFinal.trim() === '') {
       const userRes = await client.query('SELECT direccion FROM usuarios WHERE id = $1', [usuario_id]);
       direccionFinal = userRes.rows[0]?.direccion || 'Dirección no especificada';
     }
 
     // 2. Calcular total
-    const total = items.reduce((sum, item) => sum + (item.precio * item.cantidad), 0);
+    const total = items.reduce((sum, item) => sum + (Number(item.precio) * Number(item.cantidad)), 0);
 
-    // 3. Insertar en tabla 'pedidos'
+    // 3. Insertar en la tabla 'pedidos' (Estado por defecto 'En proceso')
     const pedidoRes = await client.query(
       `INSERT INTO pedidos (usuario_id, total, estado, direccion_envio)
        VALUES ($1, $2, 'En proceso', $3) 
@@ -34,7 +39,7 @@ exports.crearOrden = async (req, res) => {
 
     const pedidoId = pedidoRes.rows[0].id;
 
-    // 4. Insertar en tabla 'detalle_pedidos'
+    // 4. Insertar ítems en la tabla 'detalle_pedidos'
     for (const item of items) {
       await client.query(
         `INSERT INTO detalle_pedidos (pedido_id, producto_nombre, cantidad, precio_unitario)
@@ -45,14 +50,18 @@ exports.crearOrden = async (req, res) => {
 
     await client.query('COMMIT');
 
-    res.status(201).json({
+    return res.status(201).json({
       mensaje: 'Pedido registrado con éxito',
       pedido: pedidoRes.rows[0]
     });
+
   } catch (error) {
     await client.query('ROLLBACK');
     console.error('Error al registrar pedido:', error);
-    res.status(500).json({ error: 'Error al procesar la orden en la base de datos.' });
+    return res.status(500).json({
+      error: 'Error interno al guardar la orden en la base de datos.',
+      detalle: error.message
+    });
   } finally {
     client.release();
   }
@@ -60,7 +69,11 @@ exports.crearOrden = async (req, res) => {
 
 // Obtener los pedidos del usuario autenticado
 exports.getMisPedidos = async (req, res) => {
-  const usuario_id = req.user.id;
+  const usuario_id = req.usuario ? (req.usuario.id || req.usuario.id_usuario) : null;
+
+  if (!usuario_id) {
+    return res.status(401).json({ error: 'Usuario no autenticado.' });
+  }
 
   try {
     const result = await pool.query(
@@ -84,10 +97,3 @@ exports.getMisPedidos = async (req, res) => {
     res.status(500).json({ error: 'Error al consultar el historial de pedidos.' });
   }
 };
-
-// Si tu middleware guarda el usuario en req.usuario o req.user:
-const usuario_id = req.user?.id || req.usuario?.id;
-
-if (!usuario_id) {
-  return res.status(401).json({ error: 'Usuario no identificado en la sesión.' });
-}
